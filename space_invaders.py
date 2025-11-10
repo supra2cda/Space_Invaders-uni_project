@@ -4,6 +4,7 @@ import time
 import os
 import sys
 
+#teste
 # =========================
 # Parâmetros / Constantes
 # =========================
