@@ -63,7 +63,8 @@ def criar_entidade(x,y, tipo="enemy"):
     else:
         t.shape("enemy.gif")
     
-    print("[criar_entidade] por implementar")
+    #meter o gajo na posicao certa => 0, -275 +/-
+    t.goto(x, y)
 
     t.showturtle()
     return t 
@@ -71,8 +72,15 @@ def criar_entidade(x,y, tipo="enemy"):
 def criar_bala(x, y, tipo):
     t = turtle.Turtle(visible=False)
     
-    print("[criar_bala] por implementar")
+    #mudei aq tmb
+    t.pencolor("red")
+    t.penup()
+    t.left(90)
+    t.goto(x, y)
+
+    state["player_bullets"].append((x, y)) #atualiza o dict state
     
+
     t.showturtle()
     return t
 
@@ -91,8 +99,12 @@ def mover_esquerda_handler():
 def mover_direita_handler():
     print("[mover_direita_handler] por implementar")
 
-def disparar_handler():
-    print("[disparar_handler] por implementar")
+def disparar_handler(): #mudei aq tmb :)
+    xcor = turtle.xcor() #get the x and y coordinates
+    ycor = turtle.ycor()
+    criar_bala(0, -260, "player_bullets") #executa a funcao acima
+    
+    
 
 def gravar_handler():
     print("[gravar_handler] por implementar")
@@ -103,8 +115,10 @@ def terminar_handler():
 # =========================
 # Atualizações e colisões
 # =========================
-def atualizar_balas_player(state):
-    print("[atualizar_balas_player] por implementar")
+def atualizar_balas_player(state): #funcao que faz as balas andarem para cima qnd disparamos
+    xcor = state["player_bullets"[0][0]]
+    ycor = state["player_bullets"[0][1]]
+    criar_bala(xcor+10, ycor+10, "player_bullets")    
 
 def atualizar_balas_inimigos(state):
     print("[atualizar_balas_inimigos] por implementar")
@@ -155,7 +169,7 @@ if __name__ == "__main__":
         "player": None,
         "enemies": [],
         "enemy_moves": [],          
-        "player_bullets": [],
+        "player_bullets": [(0, -260)],
         "enemy_bullets": [],
         "score": 0,
         "frame": 0,
@@ -167,7 +181,7 @@ if __name__ == "__main__":
         print("[loaded=True] por implementar")
     else:
         print("New game!")
-        state["player"] = criar_entidade(0, -350,"player")
+        state["player"] = criar_entidade(0, -275,"player") #mudei aq (antes = -350)
         spawn_inimigos_em_grelha(state, None, None)
 
     # Variavel global para os keyboard key handlers
