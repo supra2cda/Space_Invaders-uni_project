@@ -123,10 +123,18 @@ def terminar_handler():
 # Atualizações e colisões
 # =========================
 def atualizar_balas_player(state): #funcao que faz as balas andarem para cima qnd disparamos
-    #xcor = state["player_bullets"[0][0]]
-    #ycor = state["player_bullets"[0][1]]
-    #criar_bala(xcor+10, ycor+10, "player_bullets")
-    print("")
+    bullets = state.get("player_bullets", [])
+    if not bullets:
+        return
+
+    new_bullets = []
+    for x, y in bullets:
+        y += PLAYER_BULLET_SPEED  #andar pra cima
+        if y < (BORDA_Y):    
+            new_bullets.append((x, y))
+            criar_bala(x, y, "player_bullets")
+
+    state["player_bullets"] = new_bullets #mudamos o dict state para acomodar as novas balas
 
 def atualizar_balas_inimigos(state):
     print("[atualizar_balas_inimigos] por implementar")
@@ -177,7 +185,7 @@ if __name__ == "__main__":
         "player": None,
         "enemies": [],
         "enemy_moves": [],          
-        "player_bullets": [(0, -260)],
+        "player_bullets": [],
         "enemy_bullets": [],
         "score": 0,
         "frame": 0,
