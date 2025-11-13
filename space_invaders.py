@@ -139,7 +139,7 @@ if __name__ == "__main__":
     screen = turtle.Screen()
     screen.title("Space Invaders IPRP")
     screen.bgcolor("black")
-    screen.setup(width=LARGURA, height=ALTURA)
+    screen.setup(width=LARGURA, height=ALTURA, startx=None, starty=None)
     screen.tracer(0)
 
     # Imagens obrigatórias
