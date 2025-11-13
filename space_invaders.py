@@ -208,4 +208,3 @@ if __name__ == "__main__":
         STATE["frame"] += 1
         screen.update()
         time.sleep(0.016)
-print("hi")
