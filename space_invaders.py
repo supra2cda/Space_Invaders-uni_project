@@ -130,7 +130,6 @@ def disparar_handler(): #maybe done
     
     STATE["player_bullets"].append(criar_bala(xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
 
-
 def gravar_handler():
     print("[gravar_handler] por implementar")
 
@@ -149,7 +148,6 @@ def atualizar_balas_player(state): #funcao que faz as balas andarem para cima qn
     for i in range(bullets):
         STATE["player_bullets"][i][1] += PLAYER_BULLET_SPEED
 
-    
 
 def atualizar_balas_inimigos(state):
     print("[atualizar_balas_inimigos] por implementar")
