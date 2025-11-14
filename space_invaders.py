@@ -160,13 +160,7 @@ def atualizar_balas_inimigos(state):
 
 def atualizar_inimigos(state):
    state=="enemy_moves"
-   while state["frame"]>=0:
-       for i in range(len(state["enemy_moves"])):
-           state["enemy_moves"][i][1]
-   if state["frame"]==5:
-       for i in range(len(state["enemy_moves"])):
-           state["enemy_moves"][i][0]+=(ENEMY_SPACING_Y+ENEMY_SIZE)
-           state["frame"]=0
+
 def inimigos_disparam(state):
     print("[inimigos_disparam] por implementar")
 
