@@ -87,14 +87,16 @@ def criar_bala(x, y, tipo): #DONE
     return t
 
 def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None): #done +/-
-   posicoes_existentes=[]
+   posicoes_existentes = []
+
    for i in range(ENEMY_ROWS):
        for j in range(ENEMY_COLS):
-        y=ENEMY_START_Y-((ENEMY_SIZE+ENEMY_SPACING_Y)*i)
-        x=-BORDA_X+((ENEMY_SIZE+ENEMY_SPACING_X)*j)
-        state["enemies"].append(criar_entidade(x,y,"enemy"))
-        posicoes_existentes.append([x,y])
-        state["enemy_moves"]=posicoes_existentes
+        y = ENEMY_START_Y - ((ENEMY_SIZE+ENEMY_SPACING_Y) * i)
+        x = -BORDA_X + ((ENEMY_SIZE+ENEMY_SPACING_X) * j)
+   
+        state["enemies"].append(criar_entidade(x, y, "enemy"))
+        posicoes_existentes.append([x, y])
+        state["enemy_moves"] = posicoes_existentes
 
 def restaurar_balas(state, lista_pos, tipo):
     print("[restaurar_balas] por implementar")
@@ -209,7 +211,7 @@ if __name__ == "__main__":
         "screen": screen,
         "player": None,
         "enemies": [],
-        "enemy_moves": [], #I am using this variable to track the postion of the enemies         
+        "enemy_moves": [], #im using this variable to track the postion of the enemies
         "player_bullets": [],
         "enemy_bullets": [],
         "score": 0,
