@@ -93,7 +93,7 @@ def restaurar_balas(state, lista_pos, tipo):
 # =========================
 # Handlers de tecla 
 # =========================
-def mover_esquerda_handler():
+def mover_esquerda_handler(): #done
     global STATE
     player = STATE.get("player")
     if not player:
@@ -105,10 +105,8 @@ def mover_esquerda_handler():
         player.setx(new_x)
     else:
         player.setx(-BORDA_X)
-    
-#Done
 
-def mover_direita_handler():
+def mover_direita_handler(): #done
     global STATE
     player = STATE.get("player")
     if not player:
@@ -120,7 +118,6 @@ def mover_direita_handler():
         player.setx(new_x)
     else:
         player.setx(BORDA_X)
-#Done
 def disparar_handler(): #mudei aq tmb :)
     global STATE
     player = STATE.get("player")
