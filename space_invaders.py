@@ -57,14 +57,16 @@ def carregar_estado_txt(filename):
 # Criação de entidades (jogador, inimigo e balas)
 # =========================
 def criar_entidade(x,y, tipo="enemy"):
+    global STATE
     t = turtle.Turtle(visible=False)
     if tipo == "player":
         t.shape("player.gif")
     else:
         t.shape("enemy.gif")
     
-    #meter o gajo na posicao certa => 0, -275 +/-
+    #meter o gajo na posicao certa => 0, -275 +/- e po-lo no dict
     t.goto(x, y)
+    t.setheading(90)
 
     t.showturtle()
     return t 
@@ -95,13 +97,14 @@ def restaurar_balas(state, lista_pos, tipo):
 # =========================
 def mover_esquerda_handler(tipo="player.gif"):
     t=turtle.Turtle.shape(tipo)
+
     t.penup()
     t.setx(-20)
-    t.pendown
+    #t.pendown
 #I'm not sure about this
 
 def mover_direita_handler():
-    print("[mover_direita_handler] por implementar")
+    print("")
 
 def disparar_handler(): #mudei aq tmb :)
     global STATE
