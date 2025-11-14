@@ -131,7 +131,7 @@ def disparar_handler(): #DONE
     xcor = player.xcor()
     ycor = player.ycor()
     
-    STATE["player_bullets"].append(criar_bala(xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
+    state["player_bullets"].append(criar_bala(xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
 
 def gravar_handler():
     print("[gravar_handler] por implementar")
