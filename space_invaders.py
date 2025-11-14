@@ -118,7 +118,8 @@ def mover_direita_handler(): #done
         player.setx(new_x)
     else:
         player.setx(BORDA_X)
-def disparar_handler(): #mudei aq tmb :)
+
+def disparar_handler(): #maybe done
     global STATE
     player = STATE.get("player")
     if not player:
