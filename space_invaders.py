@@ -81,7 +81,7 @@ def criar_bala(x, y, tipo): #DONE
         t.pencolor("yellow")
     
     t.shape("square")
-    t.goto(x, y)
+    t.teleport(x, y)
     t.showturtle()
 
     return t
@@ -125,8 +125,8 @@ def mover_direita_handler(): #DONE
     else:
         player.setx(BORDA_X)
 
-def disparar_handler(state): #maybe done
-    player = state["player"]
+def disparar_handler(): #DONE
+    player = STATE["player"]
     
     xcor = player.xcor()
     ycor = player.ycor()
@@ -142,15 +142,14 @@ def terminar_handler():
 # =========================
 # Atualizações e colisões
 # =========================
-def atualizar_balas_player(state): #PRINCIPAL
+def atualizar_balas_player(state): #DONE
     bullets = state["player_bullets"]
 
     for bullet in bullets:
-        bullet.sety(bullet.ycor() + PLAYER_BULLET_SPEED)
+        bullet.sety(bullet.ycor() + PLAYER_BULLET_SPEED) #andar com as bullets pra cima
      
-        if (bullet.ycor() + PLAYER_BULLET_SPEED) >= BORDA_Y: #se 
+        if (bullet.ycor() + PLAYER_BULLET_SPEED) >= BORDA_Y: #se as bullets sairem das boudaries
             bullets.remove(bullet)    
-
 
 def atualizar_balas_inimigos(state):
     print("")
@@ -159,7 +158,7 @@ def atualizar_inimigos(state): #DONE
     global STATE
 
     for i in STATE["enemies"]:
-        i.sety(i.ycor() - ENEMY_FALL_SPEED) #they all fall
+        i.sety(i.ycor() - ENEMY_FALL_SPEED) #os enemies caem tds
 
         num = round(random.random(), 1) #drift
         lftOrRgt = random.random()
