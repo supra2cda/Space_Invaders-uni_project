@@ -57,7 +57,6 @@ def carregar_estado_txt(filename):
 # Criação de entidades (jogador, inimigo e balas)
 # =========================
 def criar_entidade(x,y,tipo):
-    global STATE
     t = turtle.Turtle(visible=False)
     if tipo == "player":
         t.shape("player.gif")
@@ -65,28 +64,29 @@ def criar_entidade(x,y,tipo):
         t.shape("enemy.gif")
     
     #meter o gajo na posicao certa => 0, -275 +/- e po-lo no dict
+    t.penup()
     t.goto(x, y)
 
     t.showturtle()
     return t 
 
-def criar_bala(x, y, tipo): #done +/-
-    if tipo =="player_bullets":
-        t = turtle.Turtle(visible=False)
-        t.pencolor("red")
-        t.penup()
-        t.left(90)
-        t.goto(x, y)
+def criar_bala(x, y, tipo): #DONE
+    t = turtle.Turtle(visible=False)
+    t.penup()
 
-    if tipo=="enemy_bullets":
-        t=turtle.Turtle(visible=False)
+    if tipo == "player_bullets":
+        t.pencolor("red")
+
+    elif tipo == "enemy_bullets":
         t.pencolor("yellow")
-        t.left(90)
-        t.goto(x,y)
+    
+    t.shape("square")
+    t.goto(x, y)
+    t.showturtle()
 
     return t
 
-def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):#done +/-
+def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None): #done +/-
    posicoes_existentes=[]
    for i in range(ENEMY_ROWS):
        for j in range(ENEMY_COLS):
@@ -102,10 +102,8 @@ def restaurar_balas(state, lista_pos, tipo):
 # =========================
 # Handlers de tecla 
 # =========================
-def mover_esquerda_handler(): #done
+def mover_esquerda_handler(): #DONE
     player = STATE.get("player")
-    if not player:
-        return
     #mover para a esquerda
     new_x = player.xcor() - PLAYER_SPEED
     #garantir que n passa a borda
@@ -114,10 +112,9 @@ def mover_esquerda_handler(): #done
     else:
         player.setx(-BORDA_X)
 
-def mover_direita_handler(): #done
+def mover_direita_handler(): #DONE
     player = STATE.get("player")
-    if not player:
-        return
+
     #mover para a direita
     new_x = player.xcor() + PLAYER_SPEED
     #garantir que n passa a borda
@@ -126,10 +123,8 @@ def mover_direita_handler(): #done
     else:
         player.setx(BORDA_X)
 
-def disparar_handler(): #maybe done
-    player = STATE.get("player")
-    if not player:
-        return
+def disparar_handler(state): #maybe done
+    player = state["player"]
     
     xcor = player.xcor()
     ycor = player.ycor()
@@ -145,21 +140,32 @@ def terminar_handler():
 # =========================
 # Atualizações e colisões
 # =========================
-def atualizar_balas_player(state): #funcao que faz as balas andarem para cima qnd disparamos
-    global STATE
-    bullets = state.get("player_bullets", [])
-    if not bullets:
-        return
+def atualizar_balas_player(state): #PRINCIPAL
+    bullets = state["player_bullets"]
 
-    for i in range(bullets):
-        state["player_bullets"][i][1] += PLAYER_BULLET_SPEED
+    for bullet in bullets:
+        bullet.sety(bullet.ycor() + PLAYER_BULLET_SPEED)
+     
+        if (bullet.ycor() + PLAYER_BULLET_SPEED) >= BORDA_Y: #se 
+            bullets.remove(bullet)    
 
 
 def atualizar_balas_inimigos(state):
     print("")
 
-def atualizar_inimigos(state):
-   state=="enemy_moves"
+def atualizar_inimigos(state): #DONE
+    global STATE
+
+    for i in STATE["enemies"]:
+        i.sety(i.ycor() - ENEMY_FALL_SPEED) #they all fall
+
+        num = round(random.random(), 1) #drift
+        lftOrRgt = random.random()
+        if num == ENEMY_DRIFT_CHANCE and lftOrRgt < 0.5:
+            i.setx(i.xcor() + ENEMY_DRIFT_STEP)
+        elif num == ENEMY_DRIFT_CHANCE and lftOrRgt > 0.5:
+            i.setx(i.xcor() - ENEMY_DRIFT_STEP)
+       
 
 def inimigos_disparam(state):
     print("[inimigos_disparam] por implementar")

@@ -1,3 +1,3 @@
 # Projecto_01_IPRP
 
-meti as balas a andar
+1- the enemies now fall (l. 165)
