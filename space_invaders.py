@@ -93,17 +93,34 @@ def restaurar_balas(state, lista_pos, tipo):
 # =========================
 # Handlers de tecla 
 # =========================
-def mover_esquerda_handler(tipo="player.gif"):
-    t=turtle.Turtle.shape(tipo)
-
-    t.penup()
-    t.setx(-20)
-    #t.pendown
-#I'm not sure about this
+def mover_esquerda_handler():
+    global STATE
+    player = STATE.get("player")
+    if not player:
+        return
+    #mover para a esquerda
+    new_x = player.xcor() - PLAYER_SPEED
+    #garantir que n passa a borda
+    if new_x > -BORDA_X:
+        player.setx(new_x)
+    else:
+        player.setx(-BORDA_X)
+    
+#Done
 
 def mover_direita_handler():
-    print("")
-
+    global STATE
+    player = STATE.get("player")
+    if not player:
+        return
+    #mover para a direita
+    new_x = player.xcor() + PLAYER_SPEED
+    #garantir que n passa a borda
+    if new_x < BORDA_X:
+        player.setx(new_x)
+    else:
+        player.setx(BORDA_X)
+#Done
 def disparar_handler(): #mudei aq tmb :)
     global STATE
     player = STATE.get("player")
