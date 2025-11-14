@@ -80,8 +80,6 @@ def criar_bala(x, y, tipo):
     t.left(90)
     t.goto(x, y)
 
-    #state["player_bullets"].append((x, y)) #atualiza o dict state
-    
 
     t.showturtle()
     return t
@@ -115,10 +113,9 @@ def disparar_handler(): #mudei aq tmb :)
     xcor = player.xcor()
     ycor = player.ycor()
     
-    STATE["player_bullets"].append((xcor, ycor+10))
-    criar_bala(xcor, ycor+10, "player_bullets")
-    
-    
+    STATE["player_bullets"].append((xcor, ycor + PLAYER_BULLET_SPEED))
+    criar_bala(xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets")
+
 
 def gravar_handler():
     print("[gravar_handler] por implementar")
