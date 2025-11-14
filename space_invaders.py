@@ -93,8 +93,12 @@ def restaurar_balas(state, lista_pos, tipo):
 # =========================
 # Handlers de tecla 
 # =========================
-def mover_esquerda_handler():
-    print("[mover_esquerda_handler] por implementar")
+def mover_esquerda_handler(tipo="player.gif"):
+    t=turtle.Turtle.shape(tipo)
+    t.penup()
+    t.setx(-20)
+    t.pendown
+#I'm not sure about this
 
 def mover_direita_handler():
     print("[mover_direita_handler] por implementar")
