@@ -159,7 +159,8 @@ def atualizar_balas_inimigos(state):
     print("")
 
 def atualizar_inimigos(state):
-   state=="enemy_moves"
+   state["enemy_moves"]
+
 
 def inimigos_disparam(state):
     print("[inimigos_disparam] por implementar")
@@ -203,7 +204,7 @@ if __name__ == "__main__":
         "screen": screen,
         "player": None,
         "enemies": [],
-        "enemy_moves": [],          
+        "enemy_moves": [], #I am using this variable to track the postion of the enemies         
         "player_bullets": [],
         "enemy_bullets": [],
         "score": 0,
