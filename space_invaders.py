@@ -56,7 +56,7 @@ def carregar_estado_txt(filename):
 # =========================
 # Criação de entidades (jogador, inimigo e balas)
 # =========================
-def criar_entidade(x,y, tipo="enemy"):
+def criar_entidade(x,y,tipo):
     global STATE
     t = turtle.Turtle(visible=False)
     if tipo == "player":
@@ -71,21 +71,30 @@ def criar_entidade(x,y, tipo="enemy"):
     return t 
 
 def criar_bala(x, y, tipo): #done +/-
-    t = turtle.Turtle(visible=False)
-    
-    #mudei aq tmb
-    t.pencolor("red")
-    t.penup()
-    t.left(90)
-    t.goto(x, y)
+    if tipo =="player_bullets":
+        t = turtle.Turtle(visible=False)
+        t.pencolor("red")
+        t.penup()
+        t.left(90)
+        t.goto(x, y)
 
-    t.showturtle()
+    if tipo=="enemy_bullets":
+        t=turtle.Turtle(visible=False)
+        t.pencolor("yellow")
+        t.left(90)
+        t.goto(x,y)
+
     return t
 
-def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):
+def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):#done +/-
+   posicoes_existentes=[]
    for i in range(ENEMY_ROWS):
        for j in range(ENEMY_COLS):
-           state["enemies"].append(criar_entidade(-BORDA_X+((ENEMY_SIZE+ENEMY_SPACING_X)*j),ENEMY_START_Y-((ENEMY_SIZE+ENEMY_SPACING_Y)*i),"enemy"))
+        y=ENEMY_START_Y-((ENEMY_SIZE+ENEMY_SPACING_Y)*i)
+        x=-BORDA_X+((ENEMY_SIZE+ENEMY_SPACING_X)*j)
+        state["enemies"].append(criar_entidade(x,y,"enemy"))
+        posicoes_existentes.append([x,y])
+        state["enemy_moves"]=posicoes_existentes
 
 def restaurar_balas(state, lista_pos, tipo):
     print("[restaurar_balas] por implementar")
@@ -94,7 +103,6 @@ def restaurar_balas(state, lista_pos, tipo):
 # Handlers de tecla 
 # =========================
 def mover_esquerda_handler(): #done
-    global STATE
     player = STATE.get("player")
     if not player:
         return
@@ -107,7 +115,6 @@ def mover_esquerda_handler(): #done
         player.setx(-BORDA_X)
 
 def mover_direita_handler(): #done
-    global STATE
     player = STATE.get("player")
     if not player:
         return
@@ -120,7 +127,6 @@ def mover_direita_handler(): #done
         player.setx(BORDA_X)
 
 def disparar_handler(): #maybe done
-    global STATE
     player = STATE.get("player")
     if not player:
         return
@@ -146,15 +152,21 @@ def atualizar_balas_player(state): #funcao que faz as balas andarem para cima qn
         return
 
     for i in range(bullets):
-        STATE["player_bullets"][i][1] += PLAYER_BULLET_SPEED
+        state["player_bullets"][i][1] += PLAYER_BULLET_SPEED
 
 
 def atualizar_balas_inimigos(state):
-    print("[atualizar_balas_inimigos] por implementar")
+    print("")
 
 def atualizar_inimigos(state):
-    print("[atualizar_inimigos] por implementar")
-
+   state=="enemy_moves"
+   while state["frame"]>=0:
+       for i in range(len(state["enemy_moves"])):
+           state["enemy_moves"][i][1]
+   if state["frame"]==5:
+       for i in range(len(state["enemy_moves"])):
+           state["enemy_moves"][i][0]+=(ENEMY_SPACING_Y+ENEMY_SIZE)
+           state["frame"]=0
 def inimigos_disparam(state):
     print("[inimigos_disparam] por implementar")
 
@@ -210,7 +222,7 @@ if __name__ == "__main__":
         print("[loaded=True] por implementar")
     else:
         print("New game!")
-        state["player"] = criar_entidade(0, -275,"player") #mudei aq (antes = -350)
+        state["player"] = criar_entidade(0, -280,"player") #mudei aq (antes = -350)
         spawn_inimigos_em_grelha(state, None, None)
 
     # Variavel global para os keyboard key handlers
