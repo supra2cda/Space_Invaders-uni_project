@@ -7,7 +7,7 @@ import sys
 # =========================
 # Parâmetros / Constantes
 # =========================
-LARGURA, ALTURA = 600, 900
+LARGURA, ALTURA = 600, 800 #mudei altura para conseguir ver no meu PC
 BORDA_X = (LARGURA // 2) - 20
 BORDA_Y = (ALTURA // 2) - 10
 
@@ -16,8 +16,8 @@ PLAYER_BULLET_SPEED = 16
 
 ENEMY_ROWS = 3
 ENEMY_COLS = 10
-ENEMY_SPACING_X = 60
-ENEMY_SPACING_Y = 60
+ENEMY_SPACING_X = 28 #mudei 
+ENEMY_SPACING_Y = 10 #mudei
 ENEMY_SIZE = 32
 ENEMY_START_Y = BORDA_Y - ENEMY_SIZE    # topo visível
 ENEMY_FALL_SPEED = 0.5
@@ -66,12 +66,11 @@ def criar_entidade(x,y, tipo="enemy"):
     
     #meter o gajo na posicao certa => 0, -275 +/- e po-lo no dict
     t.goto(x, y)
-    t.setheading(90)
 
     t.showturtle()
     return t 
 
-def criar_bala(x, y, tipo):
+def criar_bala(x, y, tipo): #done +/-
     t = turtle.Turtle(visible=False)
     
     #mudei aq tmb
@@ -85,7 +84,9 @@ def criar_bala(x, y, tipo):
     return t
 
 def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):
-    print("[spawn_inimigos_em_grelha] por implementar")
+   for i in range(ENEMY_ROWS):
+       for j in range(ENEMY_COLS):
+           state["enemies"].append(criar_entidade(-BORDA_X+((ENEMY_SIZE+ENEMY_SPACING_X)*j),ENEMY_START_Y-((ENEMY_SIZE+ENEMY_SPACING_Y)*i),"enemy"))
 
 def restaurar_balas(state, lista_pos, tipo):
     print("[restaurar_balas] por implementar")
