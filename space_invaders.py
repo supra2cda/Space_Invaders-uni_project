@@ -79,7 +79,6 @@ def criar_bala(x, y, tipo): #done +/-
     t.left(90)
     t.goto(x, y)
 
-
     t.showturtle()
     return t
 
@@ -129,8 +128,7 @@ def disparar_handler(): #maybe done
     xcor = player.xcor()
     ycor = player.ycor()
     
-    STATE["player_bullets"].append((xcor, ycor + PLAYER_BULLET_SPEED))
-    criar_bala(xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets")
+    STATE["player_bullets"].append(criar_bala(xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
 
 
 def gravar_handler():
@@ -143,18 +141,15 @@ def terminar_handler():
 # Atualizações e colisões
 # =========================
 def atualizar_balas_player(state): #funcao que faz as balas andarem para cima qnd disparamos
+    global STATE
     bullets = state.get("player_bullets", [])
     if not bullets:
         return
 
-    new_bullets = []
-    for x, y in bullets:
-        y += PLAYER_BULLET_SPEED  #andar pra cima
-        if y < (BORDA_Y):    
-            new_bullets.append((x, y))
-            criar_bala(x, y, "player_bullets")
+    for i in range(bullets):
+        STATE["player_bullets"][i][1] += PLAYER_BULLET_SPEED
 
-    state["player_bullets"] = new_bullets #mudamos o dict state para acomodar as novas balas
+    
 
 def atualizar_balas_inimigos(state):
     print("[atualizar_balas_inimigos] por implementar")
