@@ -152,7 +152,7 @@ def atualizar_balas_player(state): #DONE
             bullet.hideturtle()
             bullets.remove(bullet)
 
-def atualizar_balas_inimigos(state):
+def atualizar_balas_inimigos(state): #DONE
     bullets = state["enemy_bullets"]
 
     for bullet in bullets:
