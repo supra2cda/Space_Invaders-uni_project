@@ -173,16 +173,18 @@ def atualizar_inimigos(state): #DONE
             enemy.setx(enemy.xcor() + ENEMY_DRIFT_STEP)
         elif num == ENEMY_DRIFT_CHANCE and lftOrRgt > 0.5:
             enemy.setx(enemy.xcor() - ENEMY_DRIFT_STEP)
+        
+        state["enemy_moves"]
        
-def inimigos_disparam(state):
+def inimigos_disparam(state): #DONE
     for enemy in state["enemies"]:
         num = round(random.random(), 2)
+        
         if num == ENEMY_FIRE_PROB:
             xcor = enemy.xcor()
             ycor = enemy.ycor()
 
             state["enemy_bullets"].append(criar_bala(xcor, ycor - ENEMY_BULLET_SPEED, "enemy_bullets"))
-
 
 def verificar_colisoes_player_bullets(state):
     print("[verificar_colisoes_player_bullets] por implementar")
