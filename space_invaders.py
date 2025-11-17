@@ -95,7 +95,7 @@ def criar_bala(x, y, tipo):  # DONE
     return t
 
 
-def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):  #posicoes_existentes : used when to restor enemy position
+def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):  #still not done posicoes_existentes : used when to restor enemy position
     posicoes_existentes = []
 
     for i in range(ENEMY_ROWS):
@@ -105,8 +105,6 @@ def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None): 
 
             state["enemies"].append(criar_entidade(x, y, "enemy"))
             posicoes_existentes.append([x, y])
-            state["enemy_moves"] = posicoes_existentes
-            # GRAVAR A POSTIÇÃO DAS BALAS(PLAYER E ENEMY)
 
 
 def restaurar_balas(state, lista_pos, tipo):
