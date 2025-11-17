@@ -22,7 +22,7 @@ ENEMY_SIZE = 32
 ENEMY_START_Y = BORDA_Y - ENEMY_SIZE    # topo visível
 ENEMY_FALL_SPEED = 0.5
 ENEMY_DRIFT_STEP = 2
-ENEMY_FIRE_PROB = 0.006
+ENEMY_FIRE_PROB = 0.05 #0.006
 ENEMY_BULLET_SPEED = 8
 ENEMY_INVERT_CHANCE = 0.05
 ENEMY_DRIFT_CHANCE = 0.5
@@ -158,7 +158,7 @@ def atualizar_balas_inimigos(state):
     for bullet in bullets:
         bullet.sety(bullet.ycor() - ENEMY_BULLET_SPEED) #andar com as bullets pra cima
      
-        if (bullet.ycor() - ENEMY_BULLET_SPEED) >= -BORDA_Y: #se as bullets sairem das boudaries
+        if (bullet.ycor() - ENEMY_BULLET_SPEED) < -BORDA_Y: #se as bullets sairem das boudaries
             bullet.hideturtle()
             bullets.remove(bullet)
 
@@ -175,7 +175,14 @@ def atualizar_inimigos(state): #DONE
             enemy.setx(enemy.xcor() - ENEMY_DRIFT_STEP)
        
 def inimigos_disparam(state):
-    print("[inimigos_disparam] por implementar")
+    for enemy in state["enemies"]:
+        num = round(random.random(), 2)
+        if num == ENEMY_FIRE_PROB:
+            xcor = enemy.xcor()
+            ycor = enemy.ycor()
+
+            state["enemy_bullets"].append(criar_bala(xcor, ycor - ENEMY_BULLET_SPEED, "enemy_bullets"))
+
 
 def verificar_colisoes_player_bullets(state):
     print("[verificar_colisoes_player_bullets] por implementar")
