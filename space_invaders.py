@@ -165,7 +165,7 @@ def atualizar_balas_inimigos(state): #DONE
 def atualizar_inimigos(state): #DONE
     for enemy in state["enemies"]:
         enemy.sety(enemy.ycor() - ENEMY_FALL_SPEED) #os enemies caem tds
-
+        #nova_posição = state["enemy_moves"].update("enemy_moves", enemy.pos())
         num = round(random.random(), 1) #drift
         lftOrRgt = random.random()
 
@@ -178,7 +178,14 @@ def inimigos_disparam(state):
     print("[inimigos_disparam] por implementar")
 
 def verificar_colisoes_player_bullets(state):
-    print("[verificar_colisoes_player_bullets] por implementar")
+    bullets = state["player_bullets"]
+    enemies = state["enemies"] 
+    for bullet in bullets:
+        for enemy in enemies:
+            if (bullet.ycor() > (enemy.ycor() - COLLISION_RADIUS)) and (bullet.ycor() < (enemy.ycor() + COLLISION_RADIUS)):
+                if (bullet.xcor() > (enemy.xcor() - COLLISION_RADIUS)) and (bullet.xcor() < (enemy.xcor() + COLLISION_RADIUS)):
+                    enemy.hideturtle()
+                    enemies.remove(enemy)
 
 def verificar_colisoes_enemy_bullets(state):
     print("[verificar_colisoes_enemy_bullets] por implementar")
