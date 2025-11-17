@@ -153,7 +153,14 @@ def atualizar_balas_player(state): #DONE
             bullets.remove(bullet)
 
 def atualizar_balas_inimigos(state):
-    print("")
+    bullets = state["enemy_bullets"]
+
+    for bullet in bullets:
+        bullet.sety(bullet.ycor() - ENEMY_BULLET_SPEED) #andar com as bullets pra cima
+     
+        if (bullet.ycor() - ENEMY_BULLET_SPEED) >= -BORDA_Y: #se as bullets sairem das boudaries
+            bullet.hideturtle()
+            bullets.remove(bullet)
 
 def atualizar_inimigos(state): #DONE
     for enemy in state["enemies"]:
