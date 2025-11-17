@@ -7,7 +7,7 @@ import sys
 # =========================
 # Parâmetros / Constantes
 # =========================
-LARGURA, ALTURA = 600, 800 #mudei altura para conseguir ver no meu PC
+LARGURA, ALTURA = 600, 800 #mudei antes tava 900
 BORDA_X = (LARGURA // 2) - 20
 BORDA_Y = (ALTURA // 2) - 10
 
@@ -16,8 +16,8 @@ PLAYER_BULLET_SPEED = 16
 
 ENEMY_ROWS = 3
 ENEMY_COLS = 10
-ENEMY_SPACING_X = 28 #mudei 
-ENEMY_SPACING_Y = 10 #mudei
+ENEMY_SPACING_X = 28 #mudei antes tava 60
+ENEMY_SPACING_Y = 10 #mudei antes tava 60
 ENEMY_SIZE = 32
 ENEMY_START_Y = BORDA_Y - ENEMY_SIZE    # topo visível
 ENEMY_FALL_SPEED = 0.5
