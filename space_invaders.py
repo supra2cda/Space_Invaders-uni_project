@@ -56,7 +56,7 @@ def carregar_estado_txt(filename):
 # =========================
 # Criação de entidades (jogador, inimigo e balas)
 # =========================
-def criar_entidade(x,y,tipo): #prob done
+def criar_entidade(x,y,tipo): #DONE
     t = turtle.Turtle(visible=False)
     if tipo == "player":
         t.shape("player.gif")
@@ -161,6 +161,7 @@ def atualizar_inimigos(state): #DONE
 
         num = round(random.random(), 1) #drift
         lftOrRgt = random.random()
+
         if num == ENEMY_DRIFT_CHANCE and lftOrRgt < 0.5:
             enemy.setx(enemy.xcor() + ENEMY_DRIFT_STEP)
         elif num == ENEMY_DRIFT_CHANCE and lftOrRgt > 0.5:
