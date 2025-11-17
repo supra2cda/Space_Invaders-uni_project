@@ -22,7 +22,7 @@ ENEMY_SIZE = 32
 ENEMY_START_Y = BORDA_Y - ENEMY_SIZE    # topo visível
 ENEMY_FALL_SPEED = 0.5
 ENEMY_DRIFT_STEP = 2
-ENEMY_FIRE_PROB = 0.05  # 0.006
+ENEMY_FIRE_PROB = 0.005  # 0.006
 ENEMY_BULLET_SPEED = 8
 ENEMY_INVERT_CHANCE = 0.05
 ENEMY_DRIFT_CHANCE = 0.5
@@ -212,7 +212,7 @@ def inimigos_disparam(state):  # DONE
                 xcor, ycor - ENEMY_BULLET_SPEED, "enemy_bullets"))
 
 
-def verificar_colisoes_player_bullets(state):  # DONE
+def verificar_colisoes_player_bullets(state):  # falta acabar jogo
     bullets = state["player_bullets"]
     enemies = state["enemies"]
 
@@ -239,8 +239,15 @@ def inimigo_chegou_ao_fundo(state):
     print("[inimigo_chegou_ao_fundo] por implementar")
 
 
-def verificar_colisao_player_com_inimigos(state):
-    print("[verificar_colisao_player_com_inimigos] por implementar")
+def verificar_colisao_player_com_inimigos(state): # falta acabar jogo
+    enemies = state["enemies"]
+    player = state["player"]
+
+    for enemy in enemies:
+        if (enemy.ycor() < (player.ycor() + COLLISION_RADIUS)) and (enemy.ycor() > (player.ycor() - COLLISION_RADIUS)):
+            if (enemy.xcor() > (player.xcor() - COLLISION_RADIUS)) and (enemy.xcor() < (player.xcor() + COLLISION_RADIUS)):
+                player.hideturtle()
+                player.remove(player)
 
 
 # =========================
@@ -248,8 +255,7 @@ def verificar_colisao_player_com_inimigos(state):
 # =========================
 if __name__ == "__main__":
     # Pergunta inicial: carregar?
-    filename = input(
-        "Carregar jogo? Se sim, escreva nome do ficheiro, senão carregue Return: ").strip()
+    filename = input("Carregar jogo? Se sim, escreva nome do ficheiro, senão carregue Return: ").strip()
     loaded = carregar_estado_txt(filename)
 
     # Ecrã
