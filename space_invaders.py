@@ -106,9 +106,9 @@ def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None): 
             state["enemies"].append(criar_entidade(x, y, "enemy"))
             posicoes_existentes.append([x, y])
             state["enemy_moves"] = posicoes_existentes
+            # GRAVAR A POSTIÇÃO DAS BALAS(PLAYER E ENEMY)
 
 
-# GRAVAR A POSTIÇÃO DAS BALAS(PLAYER E ENEMY)
 def restaurar_balas(state, lista_pos, tipo):
     print("[restaurar_balas] por implementar")
 
