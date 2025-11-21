@@ -52,7 +52,8 @@ def atualizar_highscores(filename, score):
 
 
 def guardar_estado_txt(filename, state):
-    print("[guardar_estado_txt] por implementar")
+    filename = open(SAVE_FILE, 'r+')
+    filename.close()
 
 
 def carregar_estado_txt(filename):
@@ -151,7 +152,7 @@ def disparar_handler():  # DONE
 
 
 def gravar_handler():
-    print("[gravar_handler] por implementar")
+    print("")
 
 
 def terminar_handler():
