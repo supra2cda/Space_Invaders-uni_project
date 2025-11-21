@@ -152,7 +152,7 @@ def gravar_handler():
 
 
 def terminar_handler():
-    print("[terminar_handler] por implementar")
+    turtle.bye()
 
 # =========================
 # Atualizações e colisões
