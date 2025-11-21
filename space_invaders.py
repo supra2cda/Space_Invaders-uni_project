@@ -192,26 +192,26 @@ def atualizar_inimigos(state):  # DONE
 
     for enemy in state["enemies"]:
         enemy.sety(enemy.ycor() - ENEMY_FALL_SPEED)  # os enemies caem tds
-        # nova_posição = state["enemy_moves"].update("enemy_moves", enemy.pos())
+
         driftNum = round(random.random(), 1)  # drift
-        invNum = round(random.random(), 2)
+        invNum = round(random.random(), 2) # invert
 
-
-
-        if (state["enemy_moves"][enemyNum] == "Left") and (invNum == ENEMY_INVERT_CHANCE):
-            state["enemy_moves"][enemyNum] = "Right"
-        elif (state["enemy_moves"][enemyNum] == "Right") and (invNum == ENEMY_INVERT_CHANCE):
-            state["enemy_moves"][enemyNum] = "Left"
+        if invNum == ENEMY_INVERT_CHANCE:
+            if state["enemy_moves"][enemyNum] == "Left":
+                state["enemy_moves"][enemyNum] = "Right"
+            elif state["enemy_moves"][enemyNum] == "Right":
+                state["enemy_moves"][enemyNum] = "Left"
         
         if (state["enemy_moves"][enemyNum] == "Right") and (enemy.xcor() + ENEMY_DRIFT_STEP >= BORDA_X):
             state["enemy_moves"][enemyNum] = "Left"
-        elif (state["enemy_moves"][enemyNum] == "Left") and (enemy.xcor() - ENEMY_DRIFT_STEP <= BORDA_X):
+        elif (state["enemy_moves"][enemyNum] == "Left") and (enemy.xcor() - ENEMY_DRIFT_STEP <= -BORDA_X):
             state["enemy_moves"][enemyNum] = "Right"
         
-        if (driftNum == ENEMY_DRIFT_CHANCE) and (state["enemy_moves"][enemyNum] == "Right"):
-            enemy.setx(enemy.xcor() + ENEMY_DRIFT_STEP)
-        elif (driftNum == ENEMY_DRIFT_CHANCE) and (state["enemy_moves"][enemyNum] == "Left"):
-            enemy.setx(enemy.xcor() - ENEMY_DRIFT_STEP)
+        if driftNum == ENEMY_DRIFT_CHANCE:
+            if state["enemy_moves"][enemyNum] == "Right":
+                enemy.setx(enemy.xcor() + ENEMY_DRIFT_STEP)
+            elif state["enemy_moves"][enemyNum] == "Left":
+                enemy.setx(enemy.xcor() - ENEMY_DRIFT_STEP)
 
         enemyNum += 1
 
