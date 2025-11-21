@@ -155,6 +155,7 @@ def gravar_handler():
 
 
 def terminar_handler():
+    turtle.bye()
     print(STATE["score"])
 
 # =========================
