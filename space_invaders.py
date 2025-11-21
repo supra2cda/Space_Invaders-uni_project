@@ -95,16 +95,19 @@ def criar_bala(x, y, tipo):  # DONE
     return t
 
 
-def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):  #still not done posicoes_existentes : used when to restor enemy position
-    posicoes_existentes = []
-
+def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):  #still not done
     for i in range(ENEMY_ROWS):
         for j in range(ENEMY_COLS):
             y = ENEMY_START_Y - ((ENEMY_SIZE+ENEMY_SPACING_Y) * i)
             x = -BORDA_X + ((ENEMY_SIZE+ENEMY_SPACING_X) * j)
 
             state["enemies"].append(criar_entidade(x, y, "enemy"))
-            posicoes_existentes.append([x, y])
+
+            num = round(random.random(), 2)
+            if num < 0.5:
+                state["enemy_moves"].append("Right")
+            else:
+                state["enemy_moves"].append("Left")
 
 
 def restaurar_balas(state, lista_pos, tipo):
@@ -152,7 +155,7 @@ def gravar_handler():
 
 
 def terminar_handler():
-    print("[terminar_handler] por implementar")
+    print(STATE["score"])
 
 # =========================
 # Atualizações e colisões
@@ -184,18 +187,32 @@ def atualizar_balas_inimigos(state):  # DONE
 
 
 def atualizar_inimigos(state):  # DONE
+    enemyNum = 0
+
     for enemy in state["enemies"]:
         enemy.sety(enemy.ycor() - ENEMY_FALL_SPEED)  # os enemies caem tds
         # nova_posição = state["enemy_moves"].update("enemy_moves", enemy.pos())
-        num = round(random.random(), 1)  # drift
-        lftOrRgt = random.random()
+        driftNum = round(random.random(), 1)  # drift
+        invNum = round(random.random(), 2)
 
-        if num == ENEMY_DRIFT_CHANCE and lftOrRgt < 0.5:
+
+
+        if (state["enemy_moves"][enemyNum] == "Left") and (invNum == ENEMY_INVERT_CHANCE):
+            state["enemy_moves"][enemyNum] = "Right"
+        elif (state["enemy_moves"][enemyNum] == "Right") and (invNum == ENEMY_INVERT_CHANCE):
+            state["enemy_moves"][enemyNum] = "Left"
+        
+        if (state["enemy_moves"][enemyNum] == "Right") and (enemy.xcor() + ENEMY_DRIFT_STEP >= BORDA_X):
+            state["enemy_moves"][enemyNum] = "Left"
+        elif (state["enemy_moves"][enemyNum] == "Left") and (enemy.xcor() - ENEMY_DRIFT_STEP <= BORDA_X):
+            state["enemy_moves"][enemyNum] = "Right"
+        
+        if (driftNum == ENEMY_DRIFT_CHANCE) and (state["enemy_moves"][enemyNum] == "Right"):
             enemy.setx(enemy.xcor() + ENEMY_DRIFT_STEP)
-        elif num == ENEMY_DRIFT_CHANCE and lftOrRgt > 0.5:
+        elif (driftNum == ENEMY_DRIFT_CHANCE) and (state["enemy_moves"][enemyNum] == "Left"):
             enemy.setx(enemy.xcor() - ENEMY_DRIFT_STEP)
 
-        state["enemy_moves"]
+        enemyNum += 1
 
 
 def inimigos_disparam(state):  # DONE
@@ -223,6 +240,8 @@ def verificar_colisoes_player_bullets(state):  # DONE
 
                     bullet.hideturtle()
                     bullets.remove(bullet)
+
+                    state["score"] += 1
 
 
 def verificar_colisoes_enemy_bullets(state):  # DONE
