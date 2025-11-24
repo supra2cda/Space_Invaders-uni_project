@@ -40,19 +40,28 @@ STATE = None  # usado apenas para callbacks do teclado
 
 
 def ler_highscores(filename):
-    ficheiro = open(filename, 'r+').split()
+    ficheiro = open(filename, 'r+')
 
-    highscores = ficheiro.read()
+    highscores = ficheiro.read().split()
 
     for score in range(len(highscores)):
         if score % 2 == 0:
-            highscores.update({highscores[score]: highscores[score + 1]})   
+            highscores.update({highscores[score]: highscores[score + 1]}) 
 
     ficheiro.close()
 
+    return highscores
+
 
 def atualizar_highscores(filename, score):
-    print("[atualizar_highscores] por implementar")
+    highscores = ler_highscores(filename)
+
+    ficheiro = open(filename, "r+")
+
+    valores = highscores.values()
+
+
+    ficheiro.close()
 
 # =========================
 # Guardar / Carregar estado (texto)
