@@ -40,7 +40,15 @@ STATE = None  # usado apenas para callbacks do teclado
 
 
 def ler_highscores(filename):
-    print("[ler_highscores] por implementar")
+    ficheiro = open(filename, 'r+').split()
+
+    highscores = ficheiro.read()
+
+    for score in range(len(highscores)):
+        if score % 2 == 0:
+            highscores.update({highscores[score]: highscores[score + 1]})   
+
+    ficheiro.close()
 
 
 def atualizar_highscores(filename, score):
@@ -52,7 +60,7 @@ def atualizar_highscores(filename, score):
 
 
 def guardar_estado_txt(filename, state):
-    filename = open(SAVE_FILE, 'r+')
+    filename = open(state["files"]["save"], 'r+')
     filename.close()
 
 
@@ -157,6 +165,7 @@ def gravar_handler():
 
 def terminar_handler():
     turtle.bye()
+    ler_highscores(STATE["files"]["highscores"])
     print(STATE["score"])
 
 # =========================
