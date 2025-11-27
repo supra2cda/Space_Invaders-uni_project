@@ -6,15 +6,5 @@ darkModern
 
 {Yassine: 12 Andre: 10 Bernardo: 3}
 
-highscores = ler_highscores(filename)
 
-    ficheiro = open(filename, "r+")
-
-    valores = highscores.values()
-
-    for valor in valores:
-        if score > valor:
-            
-
-
-    ficheiro.close()
+no atualizar highscores eu acho que ele esta a ler e a escrever o numero no sitio do anterior mas ainda falta que ele meta o anterior no numero a seguir e que ele de input no gajo que fez o recorde

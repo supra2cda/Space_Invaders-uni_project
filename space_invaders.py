@@ -40,34 +40,42 @@ STATE = None  # usado apenas para callbacks do teclado
 
 
 def ler_highscores(filename):
-    ficheiro = open(filename, 'r+')
+    with open(filename, 'r') as ficheiro:
 
-    highscores = ficheiro.read().split() # mete os valores numa lista [nome, valor]
-    newHighscores = {}
+        highscores = ficheiro.read().split() # mete os valores numa lista [nome, valor, nome, valor]
 
-    for score in range(len(highscores)):
-        if score % 2 == 0:
-            newHighscores.update({highscores[score]: highscores[score + 1]}) # mete a lista num dicionario
+        nomes = []
+        valores = []
 
-    ficheiro.close()
+        for i in highscores:
+            if (highscores.index(i) % 2) == 0:
+                nomes.append(str(i))
 
-    return newHighscores
+        for i in highscores: # mete os valores todos numa lista
+            if (highscores.index(i) % 2) != 0:
+                valores.append(int(i))
+
+    return nomes, valores
 
 
 def atualizar_highscores(filename, score):
-    highscores = ler_highscores(filename)
+    nomes, valores = ler_highscores(filename)
 
     with open(filename, "r+") as ficheiro:
-        valores = highscores.values()
+        for valor in valores: # substitui os valores
+            if (score > valor) and (valores.index(valor) == 0):
+                valor = score
+                newNome = str(input('Digite o nome do recordista: '))
+            elif (score > valor) and (score < (valores.index(valor) -1)):
+                valor = score
+                newNome = str(input('Digite o nome do recordista: '))
 
-    for valor in valores:
-        if (score > valor) and (valores.find(valor) == 0):
-            valor = score
-        elif (score > valor) and (score < (valores.find(valor) -1)):
-            valor = score
-    
-    ficheiro.write()
-    return highscores
+        for nome,valor in nomes,valores:
+            nomes.append(nome)
+            valores.append(str(valor))
+       
+        ficheiro.seek(0, 0)
+        ficheiro.write()
             
             
 
