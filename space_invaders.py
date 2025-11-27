@@ -42,11 +42,11 @@ STATE = None  # usado apenas para callbacks do teclado
 def ler_highscores(filename):
     ficheiro = open(filename, 'r+')
 
-    highscores = ficheiro.read().split()
+    highscores = ficheiro.read().split() # mete os valores numa lista [nome, valor]
 
     for score in range(len(highscores)):
         if score % 2 == 0:
-            highscores.update({highscores[score]: highscores[score + 1]}) 
+            highscores.update({highscores[score]: highscores[score + 1]}) # mete a lista num dicionario
 
     ficheiro.close()
 
@@ -164,8 +164,7 @@ def disparar_handler():  # DONE
     xcor = player.xcor()
     ycor = player.ycor()
 
-    state["player_bullets"].append(criar_bala(
-        xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
+    state["player_bullets"].append(criar_bala(xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
 
 
 def gravar_handler():
@@ -174,8 +173,9 @@ def gravar_handler():
 
 def terminar_handler():
     turtle.bye()
-    ler_highscores(STATE["files"]["highscores"])
-    print(STATE["score"])
+    print(ler_highscores(HIGHSCORES_FILE))
+    atualizar_highscores(HIGHSCORES_FILE, STATE["score"])
+
 
 # =========================
 # Atualizações e colisões
