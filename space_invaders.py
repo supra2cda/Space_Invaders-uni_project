@@ -43,25 +43,33 @@ def ler_highscores(filename):
     ficheiro = open(filename, 'r+')
 
     highscores = ficheiro.read().split() # mete os valores numa lista [nome, valor]
+    newHighscores = {}
 
     for score in range(len(highscores)):
         if score % 2 == 0:
-            highscores.update({highscores[score]: highscores[score + 1]}) # mete a lista num dicionario
+            newHighscores.update({highscores[score]: highscores[score + 1]}) # mete a lista num dicionario
 
     ficheiro.close()
 
-    return highscores
+    return newHighscores
 
 
 def atualizar_highscores(filename, score):
     highscores = ler_highscores(filename)
 
-    ficheiro = open(filename, "r+")
+    with open(filename, "r+") as ficheiro:
+        valores = highscores.values()
 
-    valores = highscores.values()
-
-
-    ficheiro.close()
+    for valor in valores:
+        if (score > valor) and (valores.find(valor) == 0):
+            valor = score
+        elif (score > valor) and (score < (valores.find(valor) -1)):
+            valor = score
+    
+    ficheiro.write()
+    return highscores
+            
+            
 
 # =========================
 # Guardar / Carregar estado (texto)
