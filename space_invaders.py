@@ -22,7 +22,7 @@ ENEMY_SIZE = 32
 ENEMY_START_Y = BORDA_Y - ENEMY_SIZE    # topo visível
 ENEMY_FALL_SPEED = 0.5
 ENEMY_DRIFT_STEP = 2
-ENEMY_FIRE_PROB = 0.05  # 0.006
+ENEMY_FIRE_PROB = 0.005  # 0.006 0.05
 ENEMY_BULLET_SPEED = 8
 ENEMY_INVERT_CHANCE = 0.05
 ENEMY_DRIFT_CHANCE = 0.5
@@ -42,7 +42,8 @@ STATE = None  # usado apenas para callbacks do teclado
 def ler_highscores(filename):
     with open(filename, 'r') as ficheiro:
 
-        highscores = ficheiro.read().split() # mete os valores numa lista [nome, valor, nome, valor]
+        # mete os valores numa lista [nome, valor, nome, valor]
+        highscores = ficheiro.read().split()
 
         nomes = []
         valores = []
@@ -51,7 +52,7 @@ def ler_highscores(filename):
             if (highscores.index(i) % 2) == 0:
                 nomes.append(str(i))
 
-        for i in highscores: # mete os valores todos numa lista
+        for i in highscores:  # mete os valores todos numa lista
             if (highscores.index(i) % 2) != 0:
                 valores.append(int(i))
 
@@ -63,22 +64,28 @@ def atualizar_highscores(filename, score):
 
     with open(filename, "r+") as ficheiro:
         highscores = []
+        
+        i = 0
+        while True:
+            valor = valores[i]
+            if score > valor:
+                if valores.index(valor) == 0: # se o score for melhor que o 1o lugar
+                    valores.insert(0, score)  # insert do score no inicio
+                    valores.pop(-1)  # remove o ultimo valor
+                    newNome = str(input('Digite o nome do recordista: '))
+                    nomes.insert(0, newNome)
+                    nomes.pop(-1)
+                    
+                    break
+                else:  # se for maior do que qqr lugar sem ser o 1o
+                    valores.insert(0, score)  # insert do score no inicio
+                    valores.pop(-1)  # remove o ultimo valor
+                    newNome = str(input('Digite o nome do recordista: '))
+                    nomes.insert(0, newNome)
+                    nomes.pop(-1)
 
-        for valor in valores: # substitui os valores e nomes
-
-            if (score > valor) and (valores.index(valor) == 0): # se o score for melhor que o 1o lugar
-                valores.insert(0, score) # insert do score no inicio
-                valores.pop(-1) # remove o ultimo valor
-                newNome = str(input('Digite o nome do recordista: '))
-                nomes.insert(0, newNome)
-                nomes.pop(-1)
-
-            elif (score > valor): # se for maior do que qqr lugar sem ser o 1o
-                valores.insert(0, score) # insert do score no inicio
-                valores.pop(-1) # remove o ultimo valor
-                newNome = str(input('Digite o nome do recordista: '))
-                nomes.insert(0, newNome)
-                nomes.pop(-1)
+                    break
+            i+=1
 
         for nome, valor in nomes, valores:
             highscores.append(nome)
@@ -88,8 +95,7 @@ def atualizar_highscores(filename, score):
 
         ficheiro.seek(0, 0)
         ficheiro.write(highscores)
-            
-            
+
 
 # =========================
 # Guardar / Carregar estado (texto)
@@ -141,7 +147,8 @@ def criar_bala(x, y, tipo):  # DONE
     return t
 
 
-def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):  #still not done
+# still not done
+def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):
     for i in range(ENEMY_ROWS):
         for j in range(ENEMY_COLS):
             y = ENEMY_START_Y - ((ENEMY_SIZE+ENEMY_SPACING_Y) * i)
@@ -192,7 +199,8 @@ def disparar_handler():  # DONE
     xcor = player.xcor()
     ycor = player.ycor()
 
-    state["player_bullets"].append(criar_bala(xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
+    STATE["player_bullets"].append(criar_bala(
+        xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
 
 
 def gravar_handler():
@@ -241,19 +249,19 @@ def atualizar_inimigos(state):  # DONE
         enemy.sety(enemy.ycor() - ENEMY_FALL_SPEED)  # os enemies caem tds
 
         driftNum = round(random.random(), 1)  # drift
-        invNum = round(random.random(), 2) # invert
+        invNum = round(random.random(), 2)  # invert
 
         if invNum == ENEMY_INVERT_CHANCE:
             if state["enemy_moves"][enemyNum] == "Left":
                 state["enemy_moves"][enemyNum] = "Right"
             elif state["enemy_moves"][enemyNum] == "Right":
                 state["enemy_moves"][enemyNum] = "Left"
-        
+
         if (state["enemy_moves"][enemyNum] == "Right") and (enemy.xcor() + ENEMY_DRIFT_STEP >= BORDA_X):
             state["enemy_moves"][enemyNum] = "Left"
         elif (state["enemy_moves"][enemyNum] == "Left") and (enemy.xcor() - ENEMY_DRIFT_STEP <= -BORDA_X):
             state["enemy_moves"][enemyNum] = "Right"
-        
+
         if driftNum == ENEMY_DRIFT_CHANCE:
             if state["enemy_moves"][enemyNum] == "Right":
                 enemy.setx(enemy.xcor() + ENEMY_DRIFT_STEP)
@@ -275,21 +283,33 @@ def inimigos_disparam(state):  # DONE
                 xcor, ycor - ENEMY_BULLET_SPEED, "enemy_bullets"))
 
 
-def verificar_colisoes_player_bullets(state):  # DONE
+# mudei aq nao sei qual é o problema mas ele estava a dar erro. o codigo anterior esta no REDME
+def verificar_colisoes_player_bullets(state):
     bullets = state["player_bullets"]
     enemies = state["enemies"]
 
-    for bullet in bullets:
-        for enemy in enemies:
+    bullets_to_remove = []
+    enemies_to_remove = []
+
+    for bullet in bullets[:]:  # iterar sobre cópia segura
+        for enemy in enemies[:]:
             if (bullet.ycor() > (enemy.ycor() - COLLISION_RADIUS)) and (bullet.ycor() < (enemy.ycor() + COLLISION_RADIUS)):
                 if (bullet.xcor() > (enemy.xcor() - COLLISION_RADIUS)) and (bullet.xcor() < (enemy.xcor() + COLLISION_RADIUS)):
                     enemy.hideturtle()
-                    enemies.remove(enemy)
+                    enemies_to_remove.append(enemy)
 
                     bullet.hideturtle()
-                    bullets.remove(bullet)
+                    bullets_to_remove.append(bullet)
 
                     state["score"] += 1
+                    break  # já removemos esta bala; passa para a próxima bala
+
+    for e in enemies_to_remove:
+        if e in enemies:
+            enemies.remove(e)
+    for b in bullets_to_remove:
+        if b in bullets:
+            bullets.remove(b)
 
 
 def verificar_colisoes_enemy_bullets(state):  # DONE
