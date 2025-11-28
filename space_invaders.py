@@ -62,20 +62,32 @@ def atualizar_highscores(filename, score):
     nomes, valores = ler_highscores(filename)
 
     with open(filename, "r+") as ficheiro:
-        for valor in valores: # substitui os valores
-            if (score > valor) and (valores.index(valor) == 0):
-                valor = score
-                newNome = str(input('Digite o nome do recordista: '))
-            elif (score > valor) and (score < (valores.index(valor) -1)):
-                valor = score
-                newNome = str(input('Digite o nome do recordista: '))
+        highscores = []
 
-        for nome,valor in nomes,valores:
-            nomes.append(nome)
-            valores.append(str(valor))
-       
+        for valor in valores: # substitui os valores e nomes
+
+            if (score > valor) and (valores.index(valor) == 0): # se o score for melhor que o 1o lugar
+                valores.insert(0, score) # insert do score no inicio
+                valores.pop(-1) # remove o ultimo valor
+                newNome = str(input('Digite o nome do recordista: '))
+                nomes.insert(0, newNome)
+                nomes.pop(-1)
+
+            elif (score > valor): # se for maior do que qqr lugar sem ser o 1o
+                valores.insert(0, score) # insert do score no inicio
+                valores.pop(-1) # remove o ultimo valor
+                newNome = str(input('Digite o nome do recordista: '))
+                nomes.insert(0, newNome)
+                nomes.pop(-1)
+
+        for nome, valor in nomes, valores:
+            highscores.append(nome)
+            highscores.append(valor)
+
+        highscores = ' '.join(highscores)
+
         ficheiro.seek(0, 0)
-        ficheiro.write()
+        ficheiro.write(highscores)
             
             
 
