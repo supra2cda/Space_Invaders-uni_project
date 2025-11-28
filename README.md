@@ -24,37 +24,3 @@ def verificar_colisoes_player_bullets(state):  # DONE
                     bullets.remove(bullet)
 
                     state["score"] += 1
-
-with open(filename, "r+") as ficheiro:
-        highscores = []
-
-        i = 0
-        while True:
-            valor = valores[i]
-            if score > valor:
-                if valores.index(valor) == 0:  # se o score for melhor que o 1o lugar
-                    valores.insert(0, score)  # insert do score no inicio
-                    valores.pop(-1)  # remove o ultimo valor
-                    newNome = str(input('Digite o nome do recordista: '))
-                    nomes.insert(0, newNome)
-                    nomes.pop(-1)
-
-                    break
-                else:  # se for maior do que qqr lugar sem ser o 1o
-                    valores.insert(0, score)  # insert do score no inicio
-                    valores.pop(-1)  # remove o ultimo valor
-                    newNome = str(input('Digite o nome do recordista: '))
-                    nomes.insert(0, newNome)
-                    nomes.pop(-1)
-
-                    break
-            i += 1
-
-        for nome, valor in nomes, valores:
-            highscores.append(nome)
-            highscores.append(valor)
-
-        highscores = ' '.join(highscores)
-
-        ficheiro.seek(0, 0)
-        ficheiro.write(highscores)
