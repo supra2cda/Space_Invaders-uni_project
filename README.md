@@ -7,20 +7,29 @@ darkModern
 {Yassine: 12 Andre: 10 Bernardo: 3}
 
 
-no atualizar highscores eu acho que ele esta a ler e a escrever o numero no sitio do anterior mas ainda falta que ele meta o anterior no numero a seguir e que ele de input no gajo que fez o recorde
-
-def verificar_colisoes_player_bullets(state):  # DONE
-    bullets = state["player_bullets"]
+bullets = state["player_bullets"]
     enemies = state["enemies"]
 
-    for bullet in bullets:
-        for enemy in enemies:
+    bullets_to_remove = []
+    enemies_to_remove = []
+
+    for bullet in bullets[:]:  # iterar sobre cópia segura
+        for enemy in enemies[:]:
             if (bullet.ycor() > (enemy.ycor() - COLLISION_RADIUS)) and (bullet.ycor() < (enemy.ycor() + COLLISION_RADIUS)):
                 if (bullet.xcor() > (enemy.xcor() - COLLISION_RADIUS)) and (bullet.xcor() < (enemy.xcor() + COLLISION_RADIUS)):
                     enemy.hideturtle()
-                    enemies.remove(enemy)
+                    enemies_to_remove.append(enemy)
 
                     bullet.hideturtle()
-                    bullets.remove(bullet)
+                    bullets_to_remove.append(bullet)
 
                     state["score"] += 1
+                    break  # já removemos esta bala; passa para a próxima bala
+
+    for e in enemies_to_remove:
+        if e in enemies:
+            enemies.remove(e)
+    for b in bullets_to_remove:
+        if b in bullets:
+            bullets.remove(b)
+

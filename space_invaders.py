@@ -294,33 +294,19 @@ def inimigos_disparam(state):  # DONE
                 xcor, ycor - ENEMY_BULLET_SPEED, "enemy_bullets"))
 
 
-# mudei aq nao sei qual é o problema mas ele estava a dar erro. o codigo anterior esta no README
-def verificar_colisoes_player_bullets(state):
-    bullets = state["player_bullets"]
-    enemies = state["enemies"]
-
-    bullets_to_remove = []
-    enemies_to_remove = []
-
-    for bullet in bullets[:]:  # iterar sobre cópia segura
-        for enemy in enemies[:]:
+def verificar_colisoes_player_bullets(state): # DONE
+    for bullet in state["player_bullets"]:
+        for enemy in state["enemies"]:
             if (bullet.ycor() > (enemy.ycor() - COLLISION_RADIUS)) and (bullet.ycor() < (enemy.ycor() + COLLISION_RADIUS)):
                 if (bullet.xcor() > (enemy.xcor() - COLLISION_RADIUS)) and (bullet.xcor() < (enemy.xcor() + COLLISION_RADIUS)):
-                    enemy.hideturtle()
-                    enemies_to_remove.append(enemy)
+                    if enemy in state["enemies"]:
+                        enemy.hideturtle()
+                        state["enemies"].remove(enemy)
 
-                    bullet.hideturtle()
-                    bullets_to_remove.append(bullet)
+                        bullet.hideturtle()
+                        state["player_bullets"].remove(bullet)
 
-                    state["score"] += 1
-                    break  # já removemos esta bala; passa para a próxima bala
-
-    for e in enemies_to_remove:
-        if e in enemies:
-            enemies.remove(e)
-    for b in bullets_to_remove:
-        if b in bullets:
-            bullets.remove(b)
+                        state["score"] += 1
 
 
 def verificar_colisoes_enemy_bullets(state):  # DONE
