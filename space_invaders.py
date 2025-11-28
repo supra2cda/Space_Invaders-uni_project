@@ -22,7 +22,7 @@ ENEMY_SIZE = 32
 ENEMY_START_Y = BORDA_Y - ENEMY_SIZE    # topo visível
 ENEMY_FALL_SPEED = 0.5
 ENEMY_DRIFT_STEP = 2
-ENEMY_FIRE_PROB = 0.005  # 0.006 0.05
+ENEMY_FIRE_PROB = 0.05  # 0.006 0.05
 ENEMY_BULLET_SPEED = 8
 ENEMY_INVERT_CHANCE = 0.05
 ENEMY_DRIFT_CHANCE = 0.5
@@ -39,7 +39,7 @@ STATE = None  # usado apenas para callbacks do teclado
 # =========================
 
 
-def ler_highscores(filename):
+def ler_highscores(filename): # DONE
     with open(filename, 'r') as ficheiro:
 
         # mete os valores numa lista [nome, valor, nome, valor]
@@ -59,41 +59,36 @@ def ler_highscores(filename):
     return nomes, valores
 
 
-def atualizar_highscores(filename, score):
+def atualizar_highscores(filename, score): # DONE
     nomes, valores = ler_highscores(filename)
+    highscores = []
+    inserido = False
+    i = 0
+    
+    while i < len(valores): # se o score for maior dq algum existente
+        if score > valores[i]:
+            newNome = input('Digite o nome do recordista: ').strip()
+            nomes.insert(i, newNome)
+            valores.insert(i, score)
+            inserido = True
+            break
+        i += 1
 
-    with open(filename, "r+") as ficheiro:
-        highscores = []
-        
-        i = 0
-        while True:
-            valor = valores[i]
-            if score > valor:
-                if valores.index(valor) == 0: # se o score for melhor que o 1o lugar
-                    valores.insert(0, score)  # insert do score no inicio
-                    valores.pop(-1)  # remove o ultimo valor
-                    newNome = str(input('Digite o nome do recordista: '))
-                    nomes.insert(0, newNome)
-                    nomes.pop(-1)
-                    
-                    break
-                else:  # se for maior do que qqr lugar sem ser o 1o
-                    valores.insert(0, score)  # insert do score no inicio
-                    valores.pop(-1)  # remove o ultimo valor
-                    newNome = str(input('Digite o nome do recordista: '))
-                    nomes.insert(0, newNome)
-                    nomes.pop(-1)
+    if (inserido == False) and (len(valores) < TOP_N): # se ainda nao houverem 10 top players
+        newNome = input('Digite o nome do recordista: ').strip()
+        nomes.append(newNome)
+        valores.append(score)
+        inserido = True
 
-                    break
-            i+=1
+    j = 0
+    while (j < len(nomes)) and (j < len(valores)):
+        highscores.append(str(nomes[j]))
+        highscores.append(str(valores[j]))
+        j += 1
 
-        for nome, valor in nomes, valores:
-            highscores.append(nome)
-            highscores.append(valor)
+    highscores = ' '.join(highscores)
 
-        highscores = ' '.join(highscores)
-
-        ficheiro.seek(0, 0)
+    with open(filename, 'r+') as ficheiro:
         ficheiro.write(highscores)
 
 
@@ -209,7 +204,6 @@ def gravar_handler():
 
 def terminar_handler():
     turtle.bye()
-    print(ler_highscores(HIGHSCORES_FILE))
     atualizar_highscores(HIGHSCORES_FILE, STATE["score"])
 
 
