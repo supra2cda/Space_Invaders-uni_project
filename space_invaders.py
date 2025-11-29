@@ -337,6 +337,7 @@ def verificar_colisoes_player_bullets(state):  # DONE
                         state["player_bullets"].remove(bullet)
 
                         state["score"] += 1
+                        break
 
 
 def verificar_colisoes_enemy_bullets(state):  # DONE
