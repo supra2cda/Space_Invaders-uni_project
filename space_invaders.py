@@ -129,7 +129,7 @@ def carregar_estado_txt(filename):
 
         x_player = lines[0][0]
         y_player = lines[0][1]
-        n_enemies = lines[1]
+        n_enemies = int(lines[1])
         enemies_position = []
         enemies_direction = []
         
@@ -137,8 +137,18 @@ def carregar_estado_txt(filename):
             enemies_position += [lines[2+i]]
         for j in range(n_enemies):
             enemies_direction += [lines[20+j]]
+        n_bullets_player = int(lines[2+n_enemies])
+        bullets_player_position = []
+        for h in range(n_bullets_player):
+            bullets_player_position += [lines[3+n_enemies+h]]
+        n_bullets_enemy = int(lines[3+n_enemies+n_bullets_player])
+        bullets_enemy_position = []
+        for k in range(n_bullets_enemy):
+            bullets_enemy_position += [lines[4+n_enemies+n_bullets_player+k]]
+        score = int(lines[4+n_enemies+n_bullets_player+n_bullets_enemy])
+        frame = int(lines[5+n_enemies+n_bullets_player+n_bullets_enemy])
 
-    return True
+    return x_player, y_player, enemies_position, enemies_direction, bullets_player_position, bullets_enemy_position, score, frame
 
 
 # =========================
