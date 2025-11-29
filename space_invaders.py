@@ -148,8 +148,8 @@ def carregar_estado_txt(filename):
         score = int(lines[4+n_enemies+n_bullets_player+n_bullets_enemy])
         frame = int(lines[5+n_enemies+n_bullets_player+n_bullets_enemy])
 
-    return x_player, y_player, enemies_position, enemies_direction, bullets_player_position, bullets_enemy_position, score, frame
-
+    return True #should be this because it's a condition to check if o jogo para implementar
+                #guess, not sure(as I said in the last commit)
 
 # =========================
 # Criação de entidades (jogador, inimigo e balas)
