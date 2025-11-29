@@ -120,8 +120,22 @@ def guardar_estado_txt(filename, state): # DONE
 
 
 def carregar_estado_txt(filename):
-    print("[carregar_estado_txt] por implementar")
+    with open(filename,'r') as f:
+        lines=f.readlines()
 
+        x_player=lines[0][0]
+        y_player=lines[0][1]
+        n_enemies=lines[1]
+        enemies_position=[]
+        enemies_direction=[]
+        for i in range(n_enemies):
+            enemies_position+=[lines[2+i]]
+        for j in range(n_enemies):
+            enemies_direction+=[lines[20+j]]
+        
+    
+    return True
+        
 
 # =========================
 # Criação de entidades (jogador, inimigo e balas)
