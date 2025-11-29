@@ -378,8 +378,7 @@ if __name__ == "__main__":
         print("[loaded=True] por implementar")
     else:
         print("New game!")
-        state["player"] = criar_entidade(
-            0, -280, "player")  # mudei aq (antes = -350)
+        state["player"] = criar_entidade(0, -280, "player")  # mudei aq (antes = -350)
         spawn_inimigos_em_grelha(state, None, None)
 
     # Variavel global para os keyboard key handlers
