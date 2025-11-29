@@ -328,9 +328,10 @@ def verificar_colisoes_player_bullets(state):  # DONE
             if (bullet.ycor() > (enemy.ycor() - COLLISION_RADIUS)) and (bullet.ycor() < (enemy.ycor() + COLLISION_RADIUS)):
                 if (bullet.xcor() > (enemy.xcor() - COLLISION_RADIUS)) and (bullet.xcor() < (enemy.xcor() + COLLISION_RADIUS)):
                     if enemy in state["enemies"]:
+                        enemy_index = state["enemies"].index(enemy)
                         enemy.hideturtle()
                         state["enemies"].remove(enemy)
-                        state["enemy_moves"].pop(state["enemy_moves"].index(state["enemy_moves"][state["enemies"].index(enemy)]))
+                        state["enemy_moves"].pop(enemy_index)
 
                         bullet.hideturtle()
                         state["player_bullets"].remove(bullet)
