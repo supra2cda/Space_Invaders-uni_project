@@ -39,7 +39,7 @@ STATE = None  # usado apenas para callbacks do teclado
 # =========================
 
 
-def ler_highscores(filename): # DONE
+def ler_highscores(filename):  # DONE
     with open(filename, 'r') as ficheiro:
         # mete os valores numa lista [nome, valor, nome, valor]
         highscores = ficheiro.read().split()
@@ -58,13 +58,13 @@ def ler_highscores(filename): # DONE
     return nomes, valores
 
 
-def atualizar_highscores(filename, score): # DONE
+def atualizar_highscores(filename, score):  # DONE
     nomes, valores = ler_highscores(filename)
     highscores = []
     inserido = False
     i = 0
-    
-    while i < len(valores): # se o score for maior dq algum existente
+
+    while i < len(valores):  # se o score for maior dq algum existente
         if score > valores[i]:
             newNome = input('Digite o nome do recordista: ').strip()
             nomes.insert(i, newNome)
@@ -73,7 +73,7 @@ def atualizar_highscores(filename, score): # DONE
             break
         i += 1
 
-    if (inserido == False) and (len(valores) < TOP_N): # se ainda nao houverem 10 top players
+    if (inserido == False) and (len(valores) < TOP_N):  # se ainda nao houverem 10 top players
         newNome = input('Digite o nome do recordista: ').strip()
         nomes.append(newNome)
         valores.append(score)
@@ -96,22 +96,26 @@ def atualizar_highscores(filename, score): # DONE
 # =========================
 
 
-def guardar_estado_txt(filename, state): # DONE
+def guardar_estado_txt(filename, state):  # DONE
     with open(filename, 'r+') as ficheiro:
         ficheiro.write(f'{state["player"].pos()}\n')
 
-        ficheiro.write(f'{len(state["enemies"])}\n') # escreve o numero de inimigos
+        # escreve o numero de inimigos
+        ficheiro.write(f'{len(state["enemies"])}\n')
         for enemy in state["enemies"]:
-            ficheiro.write(f'{enemy.pos()}\n') # escreve a posicao de cada inimigo numa linha separada
+            # escreve a posicao de cada inimigo numa linha separada
+            ficheiro.write(f'{enemy.pos()}\n')
 
-        for direction in state["enemy_moves"]: # left  right  left  right
+        for direction in state["enemy_moves"]:  # left  right  left  right
             ficheiro.write(f'{direction}\n')
 
-        ficheiro.write(f'{len(state["player_bullets"])}\n') # posicoes das balas do player
+        # posicoes das balas do player
+        ficheiro.write(f'{len(state["player_bullets"])}\n')
         for bullet in state["player_bullets"]:
             ficheiro.write(f'{bullet.pos()}\n')
 
-        ficheiro.write(f'{len(state["enemy_bullets"])}\n') # posicoes das balas dos inimigos
+        # posicoes das balas dos inimigos
+        ficheiro.write(f'{len(state["enemy_bullets"])}\n')
         for bullet in state["enemy_bullets"]:
             ficheiro.write(f'{bullet.pos()}\n')
 
@@ -120,22 +124,22 @@ def guardar_estado_txt(filename, state): # DONE
 
 
 def carregar_estado_txt(filename):
-    with open(filename,'r') as f:
-        lines=f.readlines()
+    with open(filename, 'r') as f:
+        lines = f.readlines()
 
-        x_player=lines[0][0]
-        y_player=lines[0][1]
-        n_enemies=lines[1]
-        enemies_position=[]
-        enemies_direction=[]
+        x_player = lines[0][0]
+        y_player = lines[0][1]
+        n_enemies = lines[1]
+        enemies_position = []
+        enemies_direction = []
+        
         for i in range(n_enemies):
-            enemies_position+=[lines[2+i]]
+            enemies_position += [lines[2+i]]
         for j in range(n_enemies):
-            enemies_direction+=[lines[20+j]]
-        
-    
+            enemies_direction += [lines[20+j]]
+
     return True
-        
+
 
 # =========================
 # Criação de entidades (jogador, inimigo e balas)
@@ -173,7 +177,7 @@ def criar_bala(x, y, tipo):  # DONE
     return t
 
 
-def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None): # NOT done
+def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):  # NOT done
     for i in range(ENEMY_ROWS):
         for j in range(ENEMY_COLS):
             y = ENEMY_START_Y - ((ENEMY_SIZE+ENEMY_SPACING_Y) * i)
@@ -188,7 +192,7 @@ def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None): 
                 state["enemy_moves"].append("Left")
 
 
-def restaurar_balas(state, lista_pos, tipo): # NOT done
+def restaurar_balas(state, lista_pos, tipo):  # NOT done
     print("[restaurar_balas] por implementar")
 
 # =========================
@@ -228,12 +232,12 @@ def disparar_handler():  # DONE
         xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
 
 
-def gravar_handler(): # MAYBE done
+def gravar_handler():  # MAYBE done
     turtle.bye()
     guardar_estado_txt(SAVE_FILE, STATE)
 
 
-def terminar_handler(): # MAYBE done
+def terminar_handler():  # MAYBE done
     turtle.bye()
     atualizar_highscores(HIGHSCORES_FILE, STATE["score"])
 
@@ -308,7 +312,7 @@ def inimigos_disparam(state):  # DONE
                 xcor, ycor - ENEMY_BULLET_SPEED, "enemy_bullets"))
 
 
-def verificar_colisoes_player_bullets(state): # DONE
+def verificar_colisoes_player_bullets(state):  # DONE
     for bullet in state["player_bullets"]:
         for enemy in state["enemies"]:
             if (bullet.ycor() > (enemy.ycor() - COLLISION_RADIUS)) and (bullet.ycor() < (enemy.ycor() + COLLISION_RADIUS)):
@@ -392,7 +396,8 @@ if __name__ == "__main__":
         print("[loaded=True] por implementar")
     else:
         print("New game!")
-        state["player"] = criar_entidade(0, -280, "player")  # mudei aq (antes = -350)
+        state["player"] = criar_entidade(
+            0, -280, "player")  # mudei aq (antes = -350)
         spawn_inimigos_em_grelha(state, None, None)
 
     # Variavel global para os keyboard key handlers
