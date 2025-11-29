@@ -330,6 +330,7 @@ def verificar_colisoes_player_bullets(state):  # DONE
                     if enemy in state["enemies"]:
                         enemy.hideturtle()
                         state["enemies"].remove(enemy)
+                        state["enemy_moves"].pop(state["enemy_moves"].index(state["enemy_moves"][state["enemies"].index(enemy)]))
 
                         bullet.hideturtle()
                         state["player_bullets"].remove(bullet)
