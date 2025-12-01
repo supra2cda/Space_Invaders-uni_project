@@ -1,10 +1,6 @@
 # Projecto_01_IPRP
 
-falta a funcao do bullet invert
-
-darkModern
-
-{Yassine: 12 Andre: 10 Bernardo: 3}
+m8: resolvi o problema em que no savegame ficavam varios enemy_moves
 
 
 bullets = state["player_bullets"]
