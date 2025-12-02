@@ -363,7 +363,7 @@ def inimigo_chegou_ao_fundo(state):  # DONE
     enemies = state["enemies"]
 
     for enemy in enemies:
-        if (enemy.ycor() == -BORDA_Y):
+        if (enemy.ycor() <= -BORDA_Y): #idea do chatgpt (mudar de == para <=)
             return True
 
 
