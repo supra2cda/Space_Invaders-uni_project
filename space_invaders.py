@@ -97,78 +97,84 @@ def atualizar_highscores(filename, score):  # DONE
 
 
 def guardar_estado_txt(filename, state):  # DONE
-    with open(filename, 'r+') as ficheiro:
-        ficheiro.write(f'posicoes player { state["player"].pos()}\n')
+    with open(filename, 'w') as ficheiro:
+        ficheiro.write(f'{state["player"].pos()}\n')
 
         # escreve o numero de inimigos
-        ficheiro.write(f'numero de inimigos {len(state["enemies"])}\n')
+        ficheiro.write(f'{len(state["enemies"])}\n')
         for enemy in state["enemies"]:
             # escreve a posicao de cada inimigo numa linha separada
-            ficheiro.write(f'posicoes enemies {enemy.pos()}\n')
+            ficheiro.write(f'{enemy.pos()}\n')
 
         for direction in state["enemy_moves"]:  # left  right  left  right
-            ficheiro.write(f'dicecoes enemies {direction}\n')
+            ficheiro.write(f'{direction}\n')
 
         # posicoes das balas do player
-        ficheiro.write(f'posicoes player bullet {len(state["player_bullets"])}\n')
+        ficheiro.write(f'{len(state["player_bullets"])}\n')
         for bullet in state["player_bullets"]:
-            ficheiro.write(f'posicoes player bullets {bullet.pos()}\n')
+            ficheiro.write(f'{bullet.pos()}\n')
 
         # posicoes das balas dos inimigos
-        ficheiro.write(f'posicoes das balas dos inimigos{len(state["enemy_bullets"])}\n')
+        ficheiro.write(f'{len(state["enemy_bullets"])}\n')
         for bullet in state["enemy_bullets"]:
-            ficheiro.write(f'position enemy bullets {bullet.pos()}\n')
+            ficheiro.write(f'{bullet.pos()}\n')
 
-        ficheiro.write(f'score {state["score"]}\n')
-        ficheiro.write(f'frame {state["frame"]}\n')
+        ficheiro.write(f'{state["score"]}\n')
+        ficheiro.write(f'{state["frame"]}\n')
 
 
 def carregar_estado_txt(filename):
     if not filename or filename.strip() == "":
         return False
 
-    with open(filename, 'r') as f:
-        lines = f.readlines()
+    with open(filename, 'r') as ficheiro:
+        lines = ficheiro.readlines()
 
-        # Read player position
     position = eval(lines[0].strip())  # Convert string to tuple
-    x, y = position  # Extract player x and y coordinates
+    x, y = position
 
-# Read number of enemies
+
     n_enemies = int(lines[1].strip())
 
-# Read enemy positions
     enemies_position = []
     for i in range(n_enemies):
-        enemies_position.append(eval(lines[2 + i].strip()))  # Convert each position string to tuple
+        enemies_position.append(eval(lines[2 + i].strip()))
 
-# Read enemy directions
     enemies_direction = []
-    for j in range(n_enemies):
-        enemies_direction.append(lines[2 + n_enemies + j].strip())  # Remove \n from direction
+    for i in range(n_enemies):
+        enemies_direction.append(lines[2 + n_enemies + i].strip())
 
-# Read number of player bullets
+
     n_bullets_player = int(lines[2 + (n_enemies * 2)].strip())
 
-# Read player bullet positions
     bullets_player_position = []
-    for h in range(n_bullets_player):
-        bullets_player_position.append(eval(lines[3 + (n_enemies * 2) + h].strip()))
+    for i in range(n_bullets_player):
+        bullets_player_position.append(eval(lines[3 + (n_enemies * 2) + i].strip()))
 
-# Read number of enemy bullets
     n_bullets_enemy = int(lines[3 + (n_enemies * 2) + n_bullets_player].strip())
 
-# Read enemy bullet positions
     bullets_enemy_position = []
-    for k in range(n_bullets_enemy):
-        bullets_enemy_position.append(eval(lines[4 + (n_enemies * 2) + n_bullets_player + k].strip()))
+    for i in range(n_bullets_enemy):
+        bullets_enemy_position.append(eval(lines[4 + (n_enemies * 2) + n_bullets_player + i].strip()))
 
-# Read score and frame
     score = int(lines[4 + (n_enemies * 2) + n_bullets_player + n_bullets_enemy].strip())
     frame = int(lines[5 + (n_enemies * 2) + n_bullets_player + n_bullets_enemy].strip())
 
+    criar_entidade(x, y, "player") # vai ler o README linha 3
+
+    """pre_state = {
+        "screen": screen,
+        "player": position,
+        "enemies": enemies_position,
+        "enemy_moves": enemies_direction,
+        "player_bullets": bullets_player_position,
+        "enemy_bullets": bullets_enemy_position,
+        "score": score,
+        "frame": frame,
+        "files": {"highscores": HIGHSCORES_FILE, "save": SAVE_FILE}
+    }"""
+
     return True  # should be this because it's a condition to check if o jogo para implementar
-    # guess, not sure(as I said in the last commit)
 
 # =========================
 # Criação de entidades (jogador, inimigo e balas)
@@ -265,11 +271,15 @@ def disparar_handler():  # DONE
 
 def gravar_handler():  # MAYBE done
     guardar_estado_txt(SAVE_FILE, STATE)
+    turtle.bye()
     sys.exit(0)
+
 
 def terminar_handler():  # MAYBE done
     atualizar_highscores(HIGHSCORES_FILE, STATE["score"])
+    turtle.bye()
     sys.exit(0)
+
 
 # =========================
 # Atualizações e colisões
@@ -304,7 +314,8 @@ def atualizar_inimigos(state):  # DONE
     enemyNum = 0
 
     for enemy in state["enemies"]:
-        enemy.teleport(enemy.xcor(), enemy.ycor() - ENEMY_FALL_SPEED) # descer os inimigos
+        enemy.teleport(enemy.xcor(), enemy.ycor() -
+                       ENEMY_FALL_SPEED)  # descer os inimigos
 
         driftNum = round(random.random(), 1)  # drift
         invNum = round(random.random(), 2)  # invert
@@ -373,7 +384,7 @@ def inimigo_chegou_ao_fundo(state):  # DONE
     enemies = state["enemies"]
 
     for enemy in enemies:
-        if (enemy.ycor() <= -BORDA_Y): #idea do chatgpt (mudar de == para <=)
+        if (enemy.ycor() <= -BORDA_Y):  # idea do chatgpt (mudar de == para <=)
             return True
 
 

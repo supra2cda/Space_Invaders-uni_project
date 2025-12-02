@@ -1,62 +1,56 @@
-posicoes player (100.00,-280.00)
-numero de inimigos 19
-posicoes enemies (-216.00,221.00)
-posicoes enemies (-240.00,221.00)
-posicoes enemies (-188.00,221.00)
-posicoes enemies (-92.00,221.00)
-posicoes enemies (28.00,221.00)
-posicoes enemies (188.00,221.00)
-posicoes enemies (260.00,221.00)
-posicoes enemies (-228.00,179.00)
-posicoes enemies (-214.00,179.00)
-posicoes enemies (-162.00,179.00)
-posicoes enemies (-88.00,179.00)
-posicoes enemies (222.00,179.00)
-posicoes enemies (238.00,179.00)
-posicoes enemies (-258.00,137.00)
-posicoes enemies (-192.00,137.00)
-posicoes enemies (-204.00,137.00)
-posicoes enemies (-130.00,137.00)
-posicoes enemies (230.00,137.00)
-posicoes enemies (270.00,137.00)
-diceçoes enemies Right
-diceçoes enemies Left
-diceçoes enemies Right
-diceçoes enemies Right
-diceçoes enemies Left
-diceçoes enemies Left
-diceçoes enemies Right
-diceçoes enemies Right
-diceçoes enemies Right
-diceçoes enemies Right
-diceçoes enemies Right
-diceçoes enemies Right
-diceçoes enemies Left
-diceçoes enemies Left
-diceçoes enemies Right
-diceçoes enemies Right
-diceçoes enemies Right
-diceçoes enemies Left
-diceçoes enemies Left
-posicoes player bullet 4
-posicoes player bullets (140.00,184.00)
-posicoes player bullets (100.00,72.00)
-posicoes player bullets (100.00,-24.00)
-posicoes player bullets (100.00,-184.00)
-posicoes das balas dos inimigos14
-position enemy bullets (214.00,-354.00)
-position enemy bullets (-104.00,-347.00)
-position enemy bullets (214.00,-332.00)
-position enemy bullets (-204.00,-254.00)
-position enemy bullets (-214.00,-197.00)
-position enemy bullets (-94.00,-129.50)
-position enemy bullets (-168.00,-114.50)
-position enemy bullets (232.00,-126.50)
-position enemy bullets (-230.00,-54.50)
-position enemy bullets (-220.00,25.00)
-position enemy bullets (-262.00,-51.50)
-position enemy bullets (-200.00,-29.00)
-position enemy bullets (-162.00,35.50)
-position enemy bullets (-214.00,103.00)
-score 11
-frame 274
+(-80.00,-280.00)
+21
+(-228.00,188.50)
+(-182.00,188.50)
+(-178.00,188.50)
+(78.00,188.50)
+(72.00,188.50)
+(208.00,188.50)
+(262.00,188.50)
+(-268.00,146.50)
+(-186.00,146.50)
+(-158.00,146.50)
+(136.00,146.50)
+(100.00,146.50)
+(198.00,146.50)
+(256.00,146.50)
+(-248.00,104.50)
+(-264.00,104.50)
+(-214.00,104.50)
+(132.00,104.50)
+(164.00,104.50)
+(138.00,104.50)
+(190.00,104.50)
+Right
+Left
+Left
+Right
+Left
+Right
+Right
+Right
+Right
+Left
+Right
+Left
+Right
+Left
+Left
+Left
+Left
+Right
+Left
+Left
+Left
+0
+8
+(-276.00,-356.00)
+(192.00,-192.00)
+(108.00,-184.50)
+(82.00,-52.50)
+(-184.00,-37.50)
+(-262.00,-69.00)
+(-242.00,-54.00)
+(142.00,-24.00)
+9
+339
