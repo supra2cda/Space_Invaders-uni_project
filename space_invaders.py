@@ -130,30 +130,42 @@ def carregar_estado_txt(filename):
     with open(filename, 'r') as f:
         lines = f.readlines()
 
-        x_player = lines[0][0]
-        y_player = lines[0][1]
-        n_enemies = int(lines[1])
-        enemies_position = []
-        enemies_direction = []
+        # Read player position
+    position = eval(lines[0].strip())  # Convert string to tuple
+    x, y = position  # Extract player x and y coordinates
 
-        for i in range(n_enemies):
-            enemies_position += [lines[2+i]]
+# Read number of enemies
+    n_enemies = int(lines[1].strip())
 
-        for j in range(n_enemies):
-            enemies_direction += [lines[20+j]]
-        
-        n_bullets_player = int(lines[2+n_enemies])
-        bullets_player_position = []
-        for h in range(n_bullets_player):
-            bullets_player_position += [lines[3+n_enemies+h]]
+# Read enemy positions
+    enemies_position = []
+    for i in range(n_enemies):
+        enemies_position.append(eval(lines[2 + i].strip()))  # Convert each position string to tuple
 
-        n_bullets_enemy = int(lines[3+n_enemies+n_bullets_player])
-        bullets_enemy_position = []
-        for k in range(n_bullets_enemy):
-            bullets_enemy_position += [lines[4+n_enemies+n_bullets_player+k]]
-            
-        score = int(lines[4+n_enemies+n_bullets_player+n_bullets_enemy])
-        frame = int(lines[5+n_enemies+n_bullets_player+n_bullets_enemy])
+# Read enemy directions
+    enemies_direction = []
+    for j in range(n_enemies):
+        enemies_direction.append(lines[2 + n_enemies + j].strip())  # Remove \n from direction
+
+# Read number of player bullets
+    n_bullets_player = int(lines[2 + (n_enemies * 2)].strip())
+
+# Read player bullet positions
+    bullets_player_position = []
+    for h in range(n_bullets_player):
+        bullets_player_position.append(eval(lines[3 + (n_enemies * 2) + h].strip()))
+
+# Read number of enemy bullets
+    n_bullets_enemy = int(lines[3 + (n_enemies * 2) + n_bullets_player].strip())
+
+# Read enemy bullet positions
+    bullets_enemy_position = []
+    for k in range(n_bullets_enemy):
+        bullets_enemy_position.append(eval(lines[4 + (n_enemies * 2) + n_bullets_player + k].strip()))
+
+# Read score and frame
+    score = int(lines[4 + (n_enemies * 2) + n_bullets_player + n_bullets_enemy].strip())
+    frame = int(lines[5 + (n_enemies * 2) + n_bullets_player + n_bullets_enemy].strip())
 
     return True  # should be this because it's a condition to check if o jogo para implementar
     # guess, not sure(as I said in the last commit)
