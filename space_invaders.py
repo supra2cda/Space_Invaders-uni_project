@@ -283,7 +283,9 @@ def atualizar_balas_player(state):  # DONE
 
     for bullet in bullets:
         # andar com as bullets pra cima
-        bullet.sety(bullet.ycor() + PLAYER_BULLET_SPEED)
+        
+        print(bullet)
+        bullet.teleport(bullet.xcor(), bullet.ycor() + PLAYER_BULLET_SPEED)
 
         if (bullet.ycor() + PLAYER_BULLET_SPEED) >= BORDA_Y:  # se as bullets sairem das boudaries
             bullet.hideturtle()
@@ -295,7 +297,7 @@ def atualizar_balas_inimigos(state):  # DONE
 
     for bullet in bullets:
         # andar com as bullets pra cima
-        bullet.sety(bullet.ycor() - ENEMY_BULLET_SPEED)
+        bullet.teleport(bullet.xcor(), bullet.ycor() - ENEMY_BULLET_SPEED)
 
         if (bullet.ycor() - ENEMY_BULLET_SPEED) < -BORDA_Y:  # se as bullets sairem das boudaries
             bullet.hideturtle()
@@ -306,7 +308,7 @@ def atualizar_inimigos(state):  # DONE
     enemyNum = 0
 
     for enemy in state["enemies"]:
-        enemy.sety(enemy.ycor() - ENEMY_FALL_SPEED)  # os enemies caem tds
+        enemy.teleport(enemy.xcor(), enemy.ycor() - ENEMY_FALL_SPEED) # descer os inimigos
 
         driftNum = round(random.random(), 1)  # drift
         invNum = round(random.random(), 2)  # invert
@@ -324,9 +326,9 @@ def atualizar_inimigos(state):  # DONE
 
         if driftNum == ENEMY_DRIFT_CHANCE:
             if state["enemy_moves"][enemyNum] == "Right":
-                enemy.setx(enemy.xcor() + ENEMY_DRIFT_STEP)
+                enemy.teleport(enemy.xcor() + ENEMY_DRIFT_STEP, enemy.ycor())
             elif state["enemy_moves"][enemyNum] == "Left":
-                enemy.setx(enemy.xcor() - ENEMY_DRIFT_STEP)
+                enemy.teleport(enemy.xcor() - ENEMY_DRIFT_STEP, enemy.ycor())
 
         enemyNum += 1
 
