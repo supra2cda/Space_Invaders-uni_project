@@ -98,29 +98,29 @@ def atualizar_highscores(filename, score):  # DONE
 
 def guardar_estado_txt(filename, state):  # DONE
     with open(filename, 'r+') as ficheiro:
-        ficheiro.write(f'{state["player"].pos()}\n')
+        ficheiro.write(f'posicoes player { state["player"].pos()}\n')
 
         # escreve o numero de inimigos
-        ficheiro.write(f'{len(state["enemies"])}\n')
+        ficheiro.write(f'numero de inimigos {len(state["enemies"])}\n')
         for enemy in state["enemies"]:
             # escreve a posicao de cada inimigo numa linha separada
-            ficheiro.write(f'{enemy.pos()}\n')
+            ficheiro.write(f'posicoes enemies {enemy.pos()}\n')
 
         for direction in state["enemy_moves"]:  # left  right  left  right
-            ficheiro.write(f'{direction}\n')
+            ficheiro.write(f'dicecoes enemies {direction}\n')
 
         # posicoes das balas do player
-        ficheiro.write(f'{len(state["player_bullets"])}\n')
+        ficheiro.write(f'posicoes player bullet {len(state["player_bullets"])}\n')
         for bullet in state["player_bullets"]:
-            ficheiro.write(f'{bullet.pos()}\n')
+            ficheiro.write(f'posicoes player bullets {bullet.pos()}\n')
 
         # posicoes das balas dos inimigos
-        ficheiro.write(f'{len(state["enemy_bullets"])}\n')
+        ficheiro.write(f'posicoes das balas dos inimigos{len(state["enemy_bullets"])}\n')
         for bullet in state["enemy_bullets"]:
-            ficheiro.write(f'{bullet.pos()}\n')
+            ficheiro.write(f'position enemy bullets {bullet.pos()}\n')
 
-        ficheiro.write(f'{state["score"]}\n')
-        ficheiro.write(f'{state["frame"]}\n')
+        ficheiro.write(f'score {state["score"]}\n')
+        ficheiro.write(f'frame {state["frame"]}\n')
 
 
 def carregar_estado_txt(filename):
@@ -264,14 +264,12 @@ def disparar_handler():  # DONE
 
 
 def gravar_handler():  # MAYBE done
-    turtle.bye()
     guardar_estado_txt(SAVE_FILE, STATE)
-
+    sys.exit(0)
 
 def terminar_handler():  # MAYBE done
-    turtle.bye()
     atualizar_highscores(HIGHSCORES_FILE, STATE["score"])
-
+    sys.exit(0)
 
 # =========================
 # Atualizações e colisões
@@ -283,8 +281,6 @@ def atualizar_balas_player(state):  # DONE
 
     for bullet in bullets:
         # andar com as bullets pra cima
-        
-        print(bullet)
         bullet.teleport(bullet.xcor(), bullet.ycor() + PLAYER_BULLET_SPEED)
 
         if (bullet.ycor() + PLAYER_BULLET_SPEED) >= BORDA_Y:  # se as bullets sairem das boudaries

@@ -1,95 +1,62 @@
-(0.00,-280.00)
-29
-(-268.00,317.00)
-(-216.00,317.00)
-(-148.00,317.00)
-(-84.00,317.00)
-(-34.00,317.00)
-(96.00,317.00)
-(158.00,317.00)
-(190.00,317.00)
-(250.00,317.00)
-(-260.00,275.00)
-(-228.00,275.00)
-(-144.00,275.00)
-(-114.00,275.00)
-(-64.00,275.00)
-(16.00,275.00)
-(74.00,275.00)
-(164.00,275.00)
-(198.00,275.00)
-(272.00,275.00)
-(-272.00,233.00)
-(-216.00,233.00)
-(-138.00,233.00)
-(-94.00,233.00)
-(-40.00,233.00)
-(30.00,233.00)
-(92.00,233.00)
-(136.00,233.00)
-(206.00,233.00)
-(278.00,233.00)
-Right
-Left
-Right
-Right
-Right
-Right
-Left
-Left
-Right
-Right
-Right
-Right
-Right
-Left
-Left
-Left
-Right
-Right
-Right
-Left
-Right
-Left
-Left
-Right
-Left
-Right
-Right
-Right
-Left
-4
-(0.00,280.00)
-(0.00,72.00)
-(0.00,-56.00)
-(0.00,-168.00)
-27
-(202.00,-306.50)
-(82.00,-311.00)
-(22.00,-239.00)
-(80.00,-323.00)
-(-44.00,-243.50)
-(-104.00,-221.00)
-(-158.00,-255.50)
-(-216.00,-156.50)
-(264.00,-153.50)
-(-276.00,-173.00)
-(268.00,-123.50)
-(24.00,-135.50)
-(154.00,-11.00)
-(-276.00,-45.50)
-(270.00,-38.00)
-(-150.00,98.50)
-(158.00,98.50)
-(158.00,79.00)
-(-112.00,124.00)
-(270.00,124.00)
-(202.00,89.50)
-(-150.00,181.00)
-(-88.00,181.00)
-(192.00,203.50)
-(204.00,119.50)
-(198.00,184.00)
-(92.00,217.00)
-1
-82
+posicoes player (100.00,-280.00)
+numero de inimigos 19
+posicoes enemies (-216.00,221.00)
+posicoes enemies (-240.00,221.00)
+posicoes enemies (-188.00,221.00)
+posicoes enemies (-92.00,221.00)
+posicoes enemies (28.00,221.00)
+posicoes enemies (188.00,221.00)
+posicoes enemies (260.00,221.00)
+posicoes enemies (-228.00,179.00)
+posicoes enemies (-214.00,179.00)
+posicoes enemies (-162.00,179.00)
+posicoes enemies (-88.00,179.00)
+posicoes enemies (222.00,179.00)
+posicoes enemies (238.00,179.00)
+posicoes enemies (-258.00,137.00)
+posicoes enemies (-192.00,137.00)
+posicoes enemies (-204.00,137.00)
+posicoes enemies (-130.00,137.00)
+posicoes enemies (230.00,137.00)
+posicoes enemies (270.00,137.00)
+diceçoes enemies Right
+diceçoes enemies Left
+diceçoes enemies Right
+diceçoes enemies Right
+diceçoes enemies Left
+diceçoes enemies Left
+diceçoes enemies Right
+diceçoes enemies Right
+diceçoes enemies Right
+diceçoes enemies Right
+diceçoes enemies Right
+diceçoes enemies Right
+diceçoes enemies Left
+diceçoes enemies Left
+diceçoes enemies Right
+diceçoes enemies Right
+diceçoes enemies Right
+diceçoes enemies Left
+diceçoes enemies Left
+posicoes player bullet 4
+posicoes player bullets (140.00,184.00)
+posicoes player bullets (100.00,72.00)
+posicoes player bullets (100.00,-24.00)
+posicoes player bullets (100.00,-184.00)
+posicoes das balas dos inimigos14
+position enemy bullets (214.00,-354.00)
+position enemy bullets (-104.00,-347.00)
+position enemy bullets (214.00,-332.00)
+position enemy bullets (-204.00,-254.00)
+position enemy bullets (-214.00,-197.00)
+position enemy bullets (-94.00,-129.50)
+position enemy bullets (-168.00,-114.50)
+position enemy bullets (232.00,-126.50)
+position enemy bullets (-230.00,-54.50)
+position enemy bullets (-220.00,25.00)
+position enemy bullets (-262.00,-51.50)
+position enemy bullets (-200.00,-29.00)
+position enemy bullets (-162.00,35.50)
+position enemy bullets (-214.00,103.00)
+score 11
+frame 274
