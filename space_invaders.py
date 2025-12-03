@@ -58,12 +58,10 @@ def ler_highscores(filename):  # DONE
     valores = []
 
     for i in highscores:
-        if (highscores.index(i) % 2) == 0:
-            nomes.append(str(i))
-
-    for i in highscores:  # mete os valores todos numa lista
-        if (highscores.index(i) % 2) != 0:
+        if i.isdigit() == True:
             valores.append(int(i))
+        else:
+            nomes.append(str(i))
 
     return nomes, valores
 

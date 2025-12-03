@@ -1,6 +1,24 @@
 # Projecto_01_IPRP
 
 
+def ler_highscores(filename):  # DONE
+    with open(filename, 'r') as ficheiro:
+        # mete os valores numa lista [nome, valor, nome, valor]
+        highscores = ficheiro.read().split()
+
+    nomes = []
+    valores = []
+
+    for i in highscores:
+        if (highscores.index(i) % 2) == 0:
+            nomes.append(str(i))
+
+    for i in highscores:  # mete os valores todos numa lista
+        if (highscores.index(i) % 2) != 0:
+            valores.append(int(i))
+
+    return nomes, valores
+
 
 bullets = state["player_bullets"]
     enemies = state["enemies"]
