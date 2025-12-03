@@ -1,6 +1,6 @@
 # Projecto_01_IPRP
 
-naquela funcao temos de fazer as outras funcoes pq assim comecamos logo o jogo tas a ver. em vez de dar return no pre_state que ate podia funcionar mas acho que nao é suposto fazermos assim. acho que temos de fazer as funcoes criar_entidade(player), spawn_inimigos_em_grelha() e restaurar_balas() tas a ver
+
 
 bullets = state["player_bullets"]
     enemies = state["enemies"]

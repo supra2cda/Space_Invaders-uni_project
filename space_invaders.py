@@ -396,7 +396,7 @@ def inimigo_chegou_ao_fundo(state):  # DONE
     enemies = state["enemies"]
 
     for enemy in enemies:
-        if (enemy.ycor() <= -BORDA_Y):  # idea do chatgpt (mudar de == para <=)
+        if (enemy.ycor() <= -BORDA_Y):
             return True
 
 
@@ -448,7 +448,7 @@ if __name__ == "__main__":
 
     # Construção inicial
     if loaded:
-        criar_entidade(pre_state["player"][0], pre_state["player"][1], "player")
+        state["player"] = criar_entidade(pre_state["player"][0], pre_state["player"][1], "player")
         spawn_inimigos_em_grelha(state, pre_state["enemies"], pre_state["enemy_moves"])
         #restaurar_balas(state, , )
     else:
