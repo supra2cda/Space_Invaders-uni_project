@@ -22,7 +22,7 @@ ENEMY_SIZE = 32
 ENEMY_START_Y = BORDA_Y - ENEMY_SIZE    # topo visível
 ENEMY_FALL_SPEED = 0.5
 ENEMY_DRIFT_STEP = 2
-ENEMY_FIRE_PROB = 0.05  # 0.006 0.05
+ENEMY_FIRE_PROB = 0.006
 ENEMY_BULLET_SPEED = 8
 ENEMY_INVERT_CHANCE = 0.05
 ENEMY_DRIFT_CHANCE = 0.5
@@ -357,7 +357,7 @@ def atualizar_inimigos(state):  # DONE
 
 def inimigos_disparam(state):  # DONE
     for enemy in state["enemies"]:
-        num = round(random.random(), 2)
+        num = round(random.random(), len(str(ENEMY_FIRE_PROB).split('.')[1])) # len(...) arredonda o numero para o numero de casas decimais
 
         if num == ENEMY_FIRE_PROB:
             xcor = enemy.xcor()
