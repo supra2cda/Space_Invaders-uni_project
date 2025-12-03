@@ -51,17 +51,18 @@ pre_state = {
 
 def ler_highscores(filename):  # DONE
     with open(filename, 'r') as ficheiro:
-        # mete os valores numa lista [nome, valor, nome, valor]
-        highscores = ficheiro.read().split()
+        highscores = ficheiro.read().strip().split('\n')
 
     nomes = []
     valores = []
 
-    for i in highscores:
-        if i.isdigit() == True:
-            valores.append(int(i))
-        else:
-            nomes.append(str(i))
+    for line in highscores:
+        words = line.split()
+        if len(words) >= 2:
+            nome = ' '.join(words[:-1])
+            valor = int(words[-1])
+            nomes.append(nome)
+            valores.append(valor)
 
     return nomes, valores
 
@@ -87,16 +88,14 @@ def atualizar_highscores(filename, score):  # DONE
         valores.append(score)
         inserido = True
 
-    j = 0
-    while (j < len(nomes)) and (j < len(valores)):
-        highscores.append(str(nomes[j]))
-        highscores.append(str(valores[j]))
-        j += 1
+    if (len(nomes) > TOP_N):
+        nomes = nomes[:TOP_N]
+        valores = valores[:TOP_N]
 
-    highscores = ' '.join(highscores)
-
-    with open(filename, 'r+') as ficheiro:
-        ficheiro.write(highscores)
+    with open(filename, 'w') as ficheiro:
+        num = min(len(nomes), len(valores))
+        for i in range(num):
+            ficheiro.write(f"{nomes[i]} {valores[i]}\n")
 
 
 # =========================
@@ -280,14 +279,14 @@ def disparar_handler():  # DONE
 
 
 def gravar_handler():  # MAYBE done
-    guardar_estado_txt(STATE["files"]["save"], STATE)
     turtle.bye()
+    guardar_estado_txt(STATE["files"]["save"], STATE)
     sys.exit(0)
 
 
 def terminar_handler():  # MAYBE done
-    atualizar_highscores(STATE["files"]["highscores"], STATE["score"])
     turtle.bye()
+    atualizar_highscores(STATE["files"]["highscores"], STATE["score"])
     sys.exit(0)
 
 

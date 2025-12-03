@@ -20,6 +20,40 @@ def ler_highscores(filename):  # DONE
     return nomes, valores
 
 
+
+def atualizar_highscores(filename, score):  # DONE
+    nomes, valores = ler_highscores(filename)
+    highscores = []
+    inserido = False
+    i = 0
+
+    while i < len(valores):  # se o score for maior dq algum existente
+        if score > valores[i]:
+            newNome = input('Digite o nome do recordista: ').strip()
+            nomes.insert(i, newNome)
+            valores.insert(i, score)
+            inserido = True
+            break
+        i += 1
+
+    if (inserido == False) and (len(valores) < TOP_N):  # se ainda nao houverem 10 top players
+        newNome = input('Digite o nome do recordista: ').strip()
+        nomes.append(newNome)
+        valores.append(score)
+        inserido = True
+
+    j = 0
+    while (j < len(nomes)) and (j < len(valores)):
+        highscores.append(str(nomes[j]))
+        highscores.append(str(valores[j]))
+        j += 1
+
+    highscores = ' '.join(highscores)
+
+    with open(filename, 'r+') as ficheiro:
+        ficheiro.write(highscores)
+
+
 bullets = state["player_bullets"]
     enemies = state["enemies"]
 
