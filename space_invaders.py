@@ -34,6 +34,16 @@ TOP_N = 10
 
 STATE = None  # usado apenas para callbacks do teclado
 
+pre_state = {
+        "player": None,
+        "enemies": [],
+        "enemy_moves": [],
+        "player_bullets": [],
+        "enemy_bullets": [],
+        "score": 0,
+        "frame": 0,
+    }
+
 # =========================
 # Top Resultados (Highscores)
 # =========================
@@ -130,8 +140,7 @@ def carregar_estado_txt(filename):
     with open(filename, 'r') as ficheiro:
         lines = ficheiro.readlines()
 
-    position = eval(lines[0].strip())  # Convert string to tuple
-    x, y = position
+    position = eval(lines[0].strip())
 
 
     n_enemies = int(lines[1].strip())
@@ -160,21 +169,16 @@ def carregar_estado_txt(filename):
     score = int(lines[4 + (n_enemies * 2) + n_bullets_player + n_bullets_enemy].strip())
     frame = int(lines[5 + (n_enemies * 2) + n_bullets_player + n_bullets_enemy].strip())
 
-    criar_entidade(x, y, "player") # vai ler o README linha 3
+    pre_state["player"] = position # coloca td no dicionario pre_state
+    pre_state["enemies"] = enemies_position
+    pre_state["enemy_moves"] = enemies_direction
+    pre_state["player_bullets"] = bullets_player_position
+    pre_state["enemy_bullets"] = bullets_enemy_position
+    pre_state["score"] = score
+    pre_state["frame"] = frame
 
-    """pre_state = {
-        "screen": screen,
-        "player": position,
-        "enemies": enemies_position,
-        "enemy_moves": enemies_direction,
-        "player_bullets": bullets_player_position,
-        "enemy_bullets": bullets_enemy_position,
-        "score": score,
-        "frame": frame,
-        "files": {"highscores": HIGHSCORES_FILE, "save": SAVE_FILE}
-    }"""
 
-    return True  # should be this because it's a condition to check if o jogo para implementar
+    return True
 
 # =========================
 # Criação de entidades (jogador, inimigo e balas)
@@ -214,19 +218,28 @@ def criar_bala(x, y, tipo):  # DONE
     return t
 
 
-def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):  # NOT done
-    for i in range(ENEMY_ROWS):
-        for j in range(ENEMY_COLS):
-            y = ENEMY_START_Y - ((ENEMY_SIZE+ENEMY_SPACING_Y) * i)
-            x = -BORDA_X + ((ENEMY_SIZE+ENEMY_SPACING_X) * j)
+def spawn_inimigos_em_grelha(state, posicoes_existentes, dirs_existentes=None):  # DONE
+    if loaded == True:
+        for enemy in range(len(posicoes_existentes)):
+            x = posicoes_existentes[enemy][0]
+            y = posicoes_existentes[enemy][1]
 
             state["enemies"].append(criar_entidade(x, y, "enemy"))
+            state["enemy_moves"].append(dirs_existentes[enemy])
 
-            num = round(random.random(), 2)
-            if num < 0.5:
-                state["enemy_moves"].append("Right")
-            else:
-                state["enemy_moves"].append("Left")
+    else:
+        for i in range(ENEMY_ROWS):
+            for j in range(ENEMY_COLS):
+                y = ENEMY_START_Y - ((ENEMY_SIZE+ENEMY_SPACING_Y) * i)
+                x = -BORDA_X + ((ENEMY_SIZE+ENEMY_SPACING_X) * j)
+
+                state["enemies"].append(criar_entidade(x, y, "enemy"))
+
+                num = round(random.random(), 2)
+                if num < 0.5:
+                    state["enemy_moves"].append("Right")
+                else:
+                    state["enemy_moves"].append("Left")
 
 
 def restaurar_balas(state, lista_pos, tipo):  # NOT done
@@ -265,18 +278,17 @@ def disparar_handler():  # DONE
     xcor = player.xcor()
     ycor = player.ycor()
 
-    STATE["player_bullets"].append(criar_bala(
-        xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
+    STATE["player_bullets"].append(criar_bala(xcor, ycor + PLAYER_BULLET_SPEED, "player_bullets"))
 
 
 def gravar_handler():  # MAYBE done
-    guardar_estado_txt(SAVE_FILE, STATE)
+    guardar_estado_txt(STATE["files"]["save"], STATE)
     turtle.bye()
     sys.exit(0)
 
 
 def terminar_handler():  # MAYBE done
-    atualizar_highscores(HIGHSCORES_FILE, STATE["score"])
+    atualizar_highscores(STATE["files"]["highscores"], STATE["score"])
     turtle.bye()
     sys.exit(0)
 
@@ -436,11 +448,12 @@ if __name__ == "__main__":
 
     # Construção inicial
     if loaded:
-        print("[loaded=True] por implementar")
+        criar_entidade(pre_state["player"][0], pre_state["player"][1], "player")
+        spawn_inimigos_em_grelha(state, pre_state["enemies"], pre_state["enemy_moves"])
+        #restaurar_balas(state, , )
     else:
         print("New game!")
-        state["player"] = criar_entidade(
-            0, -280, "player")  # mudei aq (antes = -350)
+        state["player"] = criar_entidade(0, -280, "player")  # mudei aq (antes = -350)
         spawn_inimigos_em_grelha(state, None, None)
 
     # Variavel global para os keyboard key handlers
