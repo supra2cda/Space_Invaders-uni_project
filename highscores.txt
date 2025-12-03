@@ -1,1 +1,1 @@
-test3 10 test 7 & "C:/Users/Yassine Khalfallah/AppData/Local/Programs/Python/Python313/python.exe" "c:/Users/Yassine Khalfallah/OneDrive - Universidade de Coimbra/Attachments/Projecto_01_IPRP/space_invaders.py" 4 test 2
+C:/Python312/python.exe c:/Users/andre.DESKTOP-ANDRE/OneDrive/Documents/UNIVERSIDADE/IPRP_25/projeto/Projecto_01_IPRP/space_invaders.py 5 Andre 3 Yassine 2
