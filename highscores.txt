@@ -1,10 +1,10 @@
-Andre 30
-Andre 28
-Yassine 28
-Dr Miguel Thergio 25
-Tiago Cruz 21
-Sal 18
-Noe Godinho 9
-Andre 8
-Chumbo 8
-Yassine 0
+best 30
+almost 22
+savegame_& "C:/Users/Yassine Khalfallah/AppData/Local/Programs/Python/Python313/python.exe" "c:/Users/Yassine Khalfallah/OneDrive - Universidade de Coimbra/Attachments/Projecto_01_IPRP/space_invaders.py" 19
+test y 15
+r 15
+my god 7
+again 3
+not good 2
+killed 0
+trying 0
