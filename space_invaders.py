@@ -451,10 +451,10 @@ if __name__ == "__main__":
 
     # Construção inicial
     if loaded:
-        state["player"] = criar_entidade(pre_state["player"][0], pre_state["player"][1], "player") # criar player
-        spawn_inimigos_em_grelha(state, pre_state["enemies"], pre_state["enemy_moves"]) # criar inimigos
-        restaurar_balas(state, pre_state["player_bullets"], "player_bullets") # criar as balas
-        restaurar_balas(state, pre_state["enemy_bullets"], "enemy_bullets")
+        state["player"] = criar_entidade(loaded["player"][0], loaded["player"][1], "player") # criar player
+        spawn_inimigos_em_grelha(state, loaded["enemies"], loaded["enemy_moves"]) # criar inimigos
+        restaurar_balas(state, loaded["player_bullets"], "player_bullets") # criar as balas
+        restaurar_balas(state, loaded["enemy_bullets"], "enemy_bullets")
     else:
         print("New game!")
         state["player"] = criar_entidade(0, -280, "player") # mudei aq (antes = -350)
