@@ -41,6 +41,9 @@ STATE = None  # usado apenas para callbacks do teclado
 
 
 def ler_highscores(filename):  # DONE
+    if not os.path.exists(filename):
+        return [], []
+
     with open(filename, 'r') as ficheiro:
         highscores = ficheiro.read().strip().split('\n')
 
@@ -61,16 +64,14 @@ def ler_highscores(filename):  # DONE
 def atualizar_highscores(filename, score):  # DONE
     nomes, valores = ler_highscores(filename)
     inserido = False
-    i = 0
-
-    while i < len(valores):  # se o score for maior dq algum existente
+    
+    for i in range(len(valores)):
         if score > valores[i]:
             newNome = input('Digite o nome do recordista: ').strip()
             nomes.insert(i, newNome)
             valores.insert(i, score)
             inserido = True
             break
-        i += 1
 
     if (inserido == False) and (len(valores) < TOP_N):  # se ainda nao houverem 10 top players
         newNome = input('Digite o nome do recordista: ').strip()
@@ -131,13 +132,13 @@ def carregar_estado_txt(filename): # DONE
         "frame": 0,
     }
 
-    if not filename or filename.strip() == "":
+    if not os.path.exists(filename):
         return False
 
     with open(filename, 'r') as ficheiro:
         lines = ficheiro.readlines()
 
-    position = eval(lines[0].strip())
+    position = eval(lines[0].strip('()'))
 
 
     n_enemies = int(lines[1].strip())
