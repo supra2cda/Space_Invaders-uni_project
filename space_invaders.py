@@ -293,10 +293,10 @@ def gravar_handler():  # DONE
 
 
 def terminar_handler():  # DONE
+    atualizar_highscores(STATE["files"]["highscores"], STATE["score"])
     with open(HIGHSCORES_FILE,'r') as ficheiro:
         highscores = ficheiro.read()
         print(highscores)
-    atualizar_highscores(STATE["files"]["highscores"], STATE["score"])
     STATE["screen"].bye()
     sys.exit(0)
 
