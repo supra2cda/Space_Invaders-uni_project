@@ -34,15 +34,6 @@ TOP_N = 10
 
 STATE = None  # usado apenas para callbacks do teclado
 
-pre_state = {
-        "player": None,
-        "enemies": [],
-        "enemy_moves": [],
-        "player_bullets": [],
-        "enemy_bullets": [],
-        "score": 0,
-        "frame": 0,
-    }
 
 # =========================
 # Top Resultados (Highscores)
@@ -130,6 +121,16 @@ def guardar_estado_txt(filename, state):  # DONE
 
 
 def carregar_estado_txt(filename): # DONE
+    pre_state = {
+        "player": None,
+        "enemies": [],
+        "enemy_moves": [],
+        "player_bullets": [],
+        "enemy_bullets": [],
+        "score": 0,
+        "frame": 0,
+    }
+
     if not filename or filename.strip() == "":
         return False
 
@@ -174,7 +175,7 @@ def carregar_estado_txt(filename): # DONE
     pre_state["frame"] = frame
 
 
-    return True
+    return pre_state
 
 # =========================
 # Criação de entidades (jogador, inimigo e balas)
@@ -290,9 +291,10 @@ def gravar_handler():  # DONE
 
 
 def terminar_handler():  # DONE
-    turtle.bye()
     atualizar_highscores(STATE["files"]["highscores"], STATE["score"])
+    STATE['screen'].bye()
     sys.exit(0)
+
 
 
 # =========================
@@ -328,13 +330,12 @@ def atualizar_inimigos(state):  # DONE
     enemyNum = 0
 
     for enemy in state["enemies"]:
-        enemy.teleport(enemy.xcor(), enemy.ycor() -
-                       ENEMY_FALL_SPEED)  # descer os inimigos
+        enemy.teleport(enemy.xcor(), enemy.ycor() - ENEMY_FALL_SPEED)  # descer os inimigos
 
-        driftNum = round(random.random(), 1)  # drift
-        invNum = round(random.random(), 2)  # invert
+        driftNum = random.random()  # drift
+        invNum = random.random()  # invert
 
-        if invNum == ENEMY_INVERT_CHANCE:
+        if invNum <= ENEMY_INVERT_CHANCE:
             if state["enemy_moves"][enemyNum] == "Left":
                 state["enemy_moves"][enemyNum] = "Right"
             elif state["enemy_moves"][enemyNum] == "Right":
@@ -345,7 +346,7 @@ def atualizar_inimigos(state):  # DONE
         elif (state["enemy_moves"][enemyNum] == "Left") and (enemy.xcor() - ENEMY_DRIFT_STEP <= -BORDA_X):
             state["enemy_moves"][enemyNum] = "Right"
 
-        if driftNum == ENEMY_DRIFT_CHANCE:
+        if driftNum <= ENEMY_DRIFT_CHANCE:
             if state["enemy_moves"][enemyNum] == "Right":
                 enemy.teleport(enemy.xcor() + ENEMY_DRIFT_STEP, enemy.ycor())
             elif state["enemy_moves"][enemyNum] == "Left":
@@ -356,9 +357,9 @@ def atualizar_inimigos(state):  # DONE
 
 def inimigos_disparam(state):  # DONE
     for enemy in state["enemies"]:
-        num = round(random.random(), len(str(ENEMY_FIRE_PROB).split('.')[1])) # len(...) arredonda o numero para o numero de casas decimais
+        num = random.random() # len(...) arredonda o numero para o numero de casas decimais
 
-        if num == ENEMY_FIRE_PROB:
+        if num <= ENEMY_FIRE_PROB:
             xcor = enemy.xcor()
             ycor = enemy.ycor()
 
