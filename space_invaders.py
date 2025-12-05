@@ -96,13 +96,13 @@ def atualizar_highscores(filename, score):  # DONE
 
 def guardar_estado_txt(filename, state):  # DONE
     with open(filename, 'w') as ficheiro:
-        ficheiro.write(f'{state["player"].pos()}\n')
+        ficheiro.write(f'{state["player"].xcor()}/{state["player"].ycor()}\n')
 
         # escreve o numero de inimigos
         ficheiro.write(f'{len(state["enemies"])}\n')
         for enemy in state["enemies"]:
             # escreve a posicao de cada inimigo numa linha separada
-            ficheiro.write(f'{enemy.pos()}\n')
+            ficheiro.write(f'{enemy.xcor()}/{enemy.ycor()}\n')
 
         for direction in state["enemy_moves"]:  # left  right  left  right
             ficheiro.write(f'{direction}\n')
@@ -110,12 +110,12 @@ def guardar_estado_txt(filename, state):  # DONE
         # posicoes das balas do player
         ficheiro.write(f'{len(state["player_bullets"])}\n')
         for bullet in state["player_bullets"]:
-            ficheiro.write(f'{bullet.pos()}\n')
+            ficheiro.write(f'{bullet.xcor()}/{bullet.ycor()}\n')
 
         # posicoes das balas dos inimigos
         ficheiro.write(f'{len(state["enemy_bullets"])}\n')
         for bullet in state["enemy_bullets"]:
-            ficheiro.write(f'{bullet.pos()}\n')
+            ficheiro.write(f'{bullet.xcor()}/{bullet.ycor()}\n')
 
         ficheiro.write(f'{state["score"]}\n')
         ficheiro.write(f'{state["frame"]}\n')
@@ -138,14 +138,14 @@ def carregar_estado_txt(filename): # DONE
     with open(filename, 'r') as ficheiro:
         lines = ficheiro.readlines()
 
-    position = eval(lines[0].strip('()'))
+    position = lines[0].strip().split('/')
 
 
     n_enemies = int(lines[1].strip())
 
     enemies_position = []
     for i in range(n_enemies):
-        enemies_position.append(eval(lines[2 + i].strip()))
+        enemies_position.append(lines[2 + i].strip().split('/'))
 
     enemies_direction = []
     for i in range(n_enemies):
@@ -156,13 +156,13 @@ def carregar_estado_txt(filename): # DONE
 
     bullets_player_position = []
     for i in range(n_bullets_player):
-        bullets_player_position.append(eval(lines[3 + (n_enemies * 2) + i].strip()))
+        bullets_player_position.append(lines[3 + (n_enemies * 2) + i].strip().split('/'))
 
     n_bullets_enemy = int(lines[3 + (n_enemies * 2) + n_bullets_player].strip())
 
     bullets_enemy_position = []
     for i in range(n_bullets_enemy):
-        bullets_enemy_position.append(eval(lines[4 + (n_enemies * 2) + n_bullets_player + i].strip()))
+        bullets_enemy_position.append(lines[4 + (n_enemies * 2) + n_bullets_player + i].strip().split('/'))
 
     score = int(lines[4 + (n_enemies * 2) + n_bullets_player + n_bullets_enemy].strip())
     frame = int(lines[5 + (n_enemies * 2) + n_bullets_player + n_bullets_enemy].strip())
@@ -292,8 +292,11 @@ def gravar_handler():  # DONE
 
 
 def terminar_handler():  # DONE
+    with open(HIGHSCORES_FILE, 'r') as ficheiro:
+        highscores = ficheiro.read().strip()
+        print(highscores)        
     atualizar_highscores(STATE["files"]["highscores"], STATE["score"])
-    STATE['screen'].bye()
+    STATE["screen"].bye()
     sys.exit(0)
 
 
@@ -452,10 +455,36 @@ if __name__ == "__main__":
 
     # Construção inicial
     if loaded:
-        state["player"] = criar_entidade(loaded["player"][0], loaded["player"][1], "player") # criar player
-        spawn_inimigos_em_grelha(state, loaded["enemies"], loaded["enemy_moves"]) # criar inimigos
-        restaurar_balas(state, loaded["player_bullets"], "player_bullets") # criar as balas
-        restaurar_balas(state, loaded["enemy_bullets"], "enemy_bullets")
+        player_x = float(loaded["player"][0]) # transformar em floats
+        player_y = float(loaded["player"][1])
+        state["player"] = criar_entidade(player_x, player_y, "player")
+        
+        for i in range(len(loaded["enemies"])):
+            pos = loaded["enemies"][i]
+            enemy_x = float(pos[0]) # transformar em floats
+            enemy_y = float(pos[1])
+            enemy = criar_entidade(enemy_x, enemy_y, "enemy")
+            state["enemies"].append(enemy)
+            state["enemy_moves"].append(loaded["enemy_moves"][i])
+
+        player_bullet_positions = []
+        for i in range(len(loaded["player_bullets"])):
+            pos = loaded["player_bullets"][i]
+            bullet_x = float(pos[0])
+            bullet_y = float(pos[1])
+            player_bullet_positions.append((bullet_x, bullet_y))
+        restaurar_balas(state, player_bullet_positions, "player_bullets")
+        
+        enemy_bullet_positions = []
+        for i in range(len(loaded["enemy_bullets"])):
+            pos = loaded["enemy_bullets"][i]
+            bullet_x = float(pos[0])
+            bullet_y = float(pos[1])
+            enemy_bullet_positions.append((bullet_x, bullet_y))
+        restaurar_balas(state, enemy_bullet_positions, "enemy_bullets")
+        
+        state["score"] = loaded["score"]
+        state["frame"] = loaded["frame"]
     else:
         print("New game!")
         state["player"] = criar_entidade(0, -280, "player") # mudei aq (antes = -350)
