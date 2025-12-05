@@ -69,7 +69,6 @@ def ler_highscores(filename):  # DONE
 
 def atualizar_highscores(filename, score):  # DONE
     nomes, valores = ler_highscores(filename)
-    highscores = []
     inserido = False
     i = 0
 
