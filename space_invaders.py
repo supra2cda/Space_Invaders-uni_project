@@ -316,7 +316,7 @@ def atualizar_balas_inimigos(state):  # DONE
     bullets = state["enemy_bullets"]
 
     for bullet in bullets:
-        # andar com as bullets pra cima
+        # andar com as bullets pra baixo
         bullet.teleport(bullet.xcor(), bullet.ycor() - ENEMY_BULLET_SPEED)
 
         if (bullet.ycor() - ENEMY_BULLET_SPEED) < -BORDA_Y:  # se as bullets sairem das boudaries
