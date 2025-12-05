@@ -67,6 +67,7 @@ def atualizar_highscores(filename, score):  # DONE
     
     for i in range(len(valores)):
         if score > valores[i]:
+            print(f'O seu score está nos top {TOP_N} !')
             newNome = input('Digite o nome do recordista: ').strip()
             nomes.insert(i, newNome)
             valores.insert(i, score)
@@ -292,9 +293,9 @@ def gravar_handler():  # DONE
 
 
 def terminar_handler():  # DONE
-    with open(HIGHSCORES_FILE, 'r') as ficheiro:
-        highscores = ficheiro.read().strip()
-        print(highscores)        
+    with open(HIGHSCORES_FILE,'r') as ficheiro:
+        highscores = ficheiro.read()
+        print(highscores)
     atualizar_highscores(STATE["files"]["highscores"], STATE["score"])
     STATE["screen"].bye()
     sys.exit(0)
